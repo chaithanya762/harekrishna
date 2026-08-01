@@ -1,6 +1,6 @@
 import { useRef, useCallback, useEffect } from 'react';
 
-// Web Audio Synthesizer for Authentic ISKCON Kirtan Tune, Vrindavan Bansuri Flute, Temple Bells & Om Drone
+// Web Audio Synthesizer for Authentic ISKCON Kirtan Tune, Temple Bells & Om Drone
 export function useSound() {
   const audioCtxRef = useRef(null);
   const ambientOscRef = useRef(null);
@@ -74,14 +74,14 @@ export function useSound() {
     osc.stop(now + 0.06);
   }, [getAudioContext]);
 
-  // 🪈 Warm Bansuri Flute & Harmonium Note Synthesizer
+  // 🎵 Harmonium & Kirtan Note Synthesizer
   const playKirtanNote = useCallback((freq, duration = 1.2, delay = 0) => {
     const ctx = getAudioContext();
     if (!ctx) return;
 
     const now = ctx.currentTime + delay;
     const osc = ctx.createOscillator();
-    const harmoniumOsc = ctx.createOscillator(); // Soft harmonium overtone
+    const harmoniumOsc = ctx.createOscillator();
     const vibrato = ctx.createOscillator();
     const vibratoGain = ctx.createGain();
     const gain = ctx.createGain();
@@ -90,9 +90,8 @@ export function useSound() {
     harmoniumOsc.type = 'triangle';
 
     osc.frequency.setValueAtTime(freq, now);
-    harmoniumOsc.frequency.setValueAtTime(freq * 0.5, now); // Sub-octave warmth
+    harmoniumOsc.frequency.setValueAtTime(freq * 0.5, now);
 
-    // Expressive Kirtan Vibrato
     vibrato.frequency.setValueAtTime(5.2, now);
     vibratoGain.gain.setValueAtTime(3.5, now);
     vibrato.connect(osc.frequency);

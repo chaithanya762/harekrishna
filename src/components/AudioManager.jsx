@@ -4,7 +4,7 @@ import './AudioManager.css';
 
 export default function AudioManager({ currentStep }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isKirtanPlaying, setIsKirtanPlaying] = useState(true); // Enabled by default for sweet background music
+  const [isKirtanPlaying, setIsKirtanPlaying] = useState(true); // Enabled by default for ISKCON background kirtan
   const [isOmPlaying, setIsOmPlaying] = useState(false);
 
   const { 
@@ -16,7 +16,7 @@ export default function AudioManager({ currentStep }) {
     getAudioContext 
   } = useSound();
 
-  // Auto-play slow Hare Krishna song on home/altar pages, stop during active Japa chanting
+  // Auto-play ISKCON Hare Krishna song on home/altar pages, stop during active Japa chanting
   useEffect(() => {
     if (currentStep !== 'chanting' && isKirtanPlaying) {
       const timer = setTimeout(() => {
@@ -60,27 +60,27 @@ export default function AudioManager({ currentStep }) {
       <button 
         className={`audio-fab ${isKirtanPlaying || isOmPlaying ? 'playing' : ''}`}
         onClick={() => { getAudioContext(); setIsOpen(!isOpen); }}
-        title="Divine Background Music Controls"
+        title="Divine Background Kirtan Controls"
       >
-        {isKirtanPlaying ? '🎶' : '🪈'}
+        {isKirtanPlaying ? '🎵' : '📿'}
       </button>
 
       {/* Expanded Control Panel */}
       {isOpen && (
         <div className="audio-panel glass-panel divine-reveal">
           <div className="audio-panel-header">
-            <h4 className="audio-panel-title">🎶 Sacred Background Music</h4>
+            <h4 className="audio-panel-title">🎵 ISKCON Kirtan Controls</h4>
             <button className="audio-close-btn" onClick={() => setIsOpen(false)}>×</button>
           </div>
 
           <div className="audio-control-group">
             <div className="audio-row">
-              <span className="audio-label">🪈 Slow Hare Krishna Flute Song</span>
+              <span className="audio-label">🎵 Authentic ISKCON Mahamantra Tune</span>
               <button 
                 className={`audio-toggle-btn ${isKirtanPlaying ? 'active' : ''}`}
                 onClick={toggleKirtan}
               >
-                {isKirtanPlaying ? 'Playing 🎶 (Tap to Pause)' : 'Play Slow Song 🪈'}
+                {isKirtanPlaying ? 'Playing 🎵 (Tap to Pause)' : 'Play ISKCON Kirtan 🎶'}
               </button>
             </div>
 
