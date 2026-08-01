@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import FestivalCalendarModal from './FestivalCalendarModal';
 import { getNextUpcomingEvents } from '../utils/calendar';
+import { getDailyGitaWisdom } from '../utils/gitaWisdom';
 import { useSound } from '../hooks/useSound';
 import './MoodSelector.css';
 
@@ -31,6 +32,7 @@ export default function MoodSelector({ onMoodSelect }) {
 
   const { playBell, getAudioContext } = useSound();
   const { nextEkadashi, nextFestival } = getNextUpcomingEvents();
+  const dailyGita = getDailyGitaWisdom();
 
   const handleClick = (id) => {
     setClickedId(id);
@@ -218,14 +220,14 @@ export default function MoodSelector({ onMoodSelect }) {
         <p className="sankalpa-current"><strong>Active Sankalpa:</strong> "{customSankalpa || sankalpaVow}"</p>
       </div>
 
-      {/* Daily Bhagavad Gita Wisdom Card */}
+      {/* Automated Daily Bhagavad Gita Wisdom Card */}
       <div className="gita-wisdom-card glass-panel">
-        <div className="gita-badge">📜 DAILY GITA WISDOM (B.G. 9.34)</div>
+        <div className="gita-badge">📜 DYNAMIC DAILY GITA WISDOM ({dailyGita.chapterVerse})</div>
         <p className="gita-verse">
-          "Man-manā bhava mad-bhakto mad-yājī māṁ namaskuru"
+          "{dailyGita.sanskrit}"
         </p>
         <p className="gita-translation">
-          "Fix your mind on Me, become My devotee, offer your homage unto Me. Thus absorbed in Me, you shall surely come to Me."
+          "{dailyGita.translation}"
         </p>
       </div>
 
