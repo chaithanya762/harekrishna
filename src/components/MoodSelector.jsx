@@ -220,9 +220,9 @@ export default function MoodSelector({ onMoodSelect }) {
         <p className="sankalpa-current"><strong>Active Sankalpa:</strong> "{customSankalpa || sankalpaVow}"</p>
       </div>
 
-      {/* Automated Daily Bhagavad Gita Wisdom Card */}
+      {/* Daily Bhagavad Gita Wisdom Card */}
       <div className="gita-wisdom-card glass-panel">
-        <div className="gita-badge">📜 DYNAMIC DAILY GITA WISDOM ({dailyGita.chapterVerse})</div>
+        <div className="gita-badge">📜 GITA WISDOM ({dailyGita.chapterVerse})</div>
         <p className="gita-verse">
           "{dailyGita.sanskrit}"
         </p>
