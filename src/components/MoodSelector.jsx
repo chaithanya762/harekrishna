@@ -23,7 +23,7 @@ export default function MoodSelector({ onMoodSelect }) {
   const [lotusFlowers, setLotusFlowers] = useState([]);
   const [tulsiLeaves, setTulsiLeaves] = useState([]);
   const [offeringText, setOfferingText] = useState('');
-  const [aartiTarget, setAartiTarget] = useState(null); // 'all' | 'tulsi'
+  const [isGrandDiyaLit, setIsGrandDiyaLit] = useState(false);
   const [showFestivalModal, setShowFestivalModal] = useState(false);
   const [sankalpaVow, setSankalpaVow] = useState(SANKALPA_OPTIONS[2]);
   const [customSankalpa, setCustomSankalpa] = useState('');
@@ -67,7 +67,7 @@ export default function MoodSelector({ onMoodSelect }) {
     }));
 
     setTulsiLeaves(newTulsi);
-    setOfferingText('🌿 Sacred Tulsi Leaves & Manjari Offered to Sri Krishna & Tulsi Maharani! 🌿');
+    setOfferingText('🌿 Sacred Tulsi Leaves Offered to Sri Krishna & Tulsi Maharani! 🌿');
 
     setTimeout(() => {
       setTulsiLeaves([]);
@@ -75,16 +75,17 @@ export default function MoodSelector({ onMoodSelect }) {
     }, 2800);
   };
 
-  // 🪔 Steady Clockwise Altar Aarti Ceremony
-  const handlePerformTempleAarti = (target = 'all') => {
+  // 🪔 Light Grand Divine Diya (Deepam)
+  const handleToggleGrandDiya = () => {
     getAudioContext();
     playBell(0.6);
-    setAartiTarget(target);
+    const nextState = !isGrandDiyaLit;
+    setIsGrandDiyaLit(nextState);
 
-    if (target === 'tulsi') {
-      setOfferingText('🪔 Clockwise Temple Aarti Performed to Vrinda Devi Srimati Tulsi Maharani! 🌿');
+    if (nextState) {
+      setOfferingText('🪔 Grand Divine Diya Lit at the Sacred Feet of the Deities! 🪔');
     } else {
-      setOfferingText('🪔 Clockwise Temple Aarti Performed to Sri Jagannath, Sri Chaitanya, Sri Krishna & Tulsi Maharani! 🪔');
+      setOfferingText('🪔 Grand Diya Extinguished');
     }
 
     if (navigator.vibrate) {
@@ -92,9 +93,8 @@ export default function MoodSelector({ onMoodSelect }) {
     }
 
     setTimeout(() => {
-      setAartiTarget(null);
       setOfferingText('');
-    }, 8000);
+    }, 3000);
   };
 
   return (
@@ -128,7 +128,7 @@ export default function MoodSelector({ onMoodSelect }) {
       </div>
 
       {/* Royal Temple Altar Shrine Banner featuring 3 Deities + Tulsi Maharani Vrindavan Shrine */}
-      <div className="royal-shrine-banner glass-panel">
+      <div className={`royal-shrine-banner glass-panel ${isGrandDiyaLit ? 'diya-illuminated' : ''}`}>
         <div className="shrine-deities-grid">
           <div className="deity-frame">
             <img src="/assets/jagannath.jpg" alt="Puri Jagannath Swamy" className="deity-img" />
@@ -144,35 +144,34 @@ export default function MoodSelector({ onMoodSelect }) {
           </div>
 
           {/* 🪴 Established Sacred Tulsi Maharani Vrinda Devi Shrine */}
-          <div className="deity-frame tulsi-shrine-frame" onClick={() => handlePerformTempleAarti('tulsi')} title="Tap to Perform Aarti to Srimati Tulsi Maharani">
+          <div className="deity-frame tulsi-shrine-frame" title="Srimati Tulsi Maharani Vrinda Devi">
             <img src="/assets/tulsi_maharani.svg" alt="Srimati Tulsi Maharani Vrinda Devi" className="deity-img tulsi-deity-img" />
             <span className="deity-label tulsi-label">🌿 Tulsi Maharani</span>
           </div>
-
-          {/* Steady Clockwise Altar Aarti Movement */}
-          {aartiTarget === 'all' && (
-            <div className="full-altar-clockwise-aarti">
-              <span className="aarti-flame">🪔</span>
-              <div className="aarti-flame-glow"></div>
-            </div>
-          )}
-
-          {aartiTarget === 'tulsi' && (
-            <div className="tulsi-clockwise-aarti-diya">
-              <span className="aarti-flame">🪔</span>
-              <div className="aarti-flame-glow"></div>
-            </div>
-          )}
         </div>
 
-        {/* Shrine Pooja & Temple Aarti Action Buttons */}
+        {/* Grand Golden Brass Diya Display at Altar Center */}
+        {isGrandDiyaLit && (
+          <div className="grand-diya-display divine-reveal">
+            <div className="grand-diya-flames">
+              <span className="diya-wick">🔥</span>
+              <span className="diya-wick main-wick">🪔</span>
+              <span className="diya-wick">🔥</span>
+            </div>
+            <div className="grand-diya-aura-glow"></div>
+            <span className="grand-diya-caption">✨ Sacred Deepam Glowing at the Altar ✨</span>
+          </div>
+        )}
+
+        {/* Shrine Pooja Action Buttons */}
         <div className="shrine-action-area">
           <div className="pooja-btn-row">
-            <button className="pooja-btn aarti-btn" onClick={() => handlePerformTempleAarti('all')} title="Perform Steady Clockwise Aarti across Altar">
-              🪔 Perform Clockwise Aarti
-            </button>
-            <button className="pooja-btn tulsi-aarti-btn" onClick={() => handlePerformTempleAarti('tulsi')} title="Perform Aarti to Sacred Tulsi Devi">
-              🪴 Tulsi Maharani Aarti
+            <button 
+              className={`pooja-btn grand-diya-btn ${isGrandDiyaLit ? 'lit' : ''}`} 
+              onClick={handleToggleGrandDiya} 
+              title="Light the Grand Golden Brass Diya at the Altar"
+            >
+              {isGrandDiyaLit ? '🪔 Grand Diya Lit ✨' : '🪔 Light Grand Divine Diya'}
             </button>
             <button className="pooja-btn tulsi-btn" onClick={handleOfferTulsi} title="Offer Sacred Tulsi Leaves to Sri Krishna">
               🌿 Offer Tulsi Leaves

@@ -93,6 +93,13 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+  transition: all 0.6s ease;
+}
+
+.royal-shrine-banner.diya-illuminated {
+  background: linear-gradient(180deg, rgba(48, 35, 24, 0.95), rgba(28, 19, 13, 0.98));
+  border-color: var(--gold-glow);
+  box-shadow: 0 0 50px rgba(255, 140, 0, 0.35), 0 15px 40px rgba(0, 0, 0, 0.8);
 }
 
 .shrine-deities-grid {
@@ -153,70 +160,51 @@
   background: rgba(34, 139, 34, 0.18) !important;
 }
 
-/* Steady Full-Altar Clockwise Aarti Diya Movement */
-.full-altar-clockwise-aarti {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 20;
+/* Grand Golden Diya Display */
+.grand-diya-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  position: relative;
 }
 
-.full-altar-clockwise-aarti .aarti-flame {
-  font-size: 3rem;
-  position: absolute;
+.grand-diya-flames {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 2.5rem;
   filter: drop-shadow(0 0 25px rgba(255, 140, 0, 1));
-  animation: steadyClockwiseAltarAarti 8s linear infinite;
 }
 
-@keyframes steadyClockwiseAltarAarti {
-  0% {
-    left: 4%;
-    top: 5px;
-    transform: scale(1);
-  }
-  25% {
-    left: 88%;
-    top: 5px;
-    transform: scale(1.15);
-  }
-  50% {
-    left: 88%;
-    top: 80px;
-    transform: scale(1);
-  }
-  75% {
-    left: 4%;
-    top: 80px;
-    transform: scale(1.15);
-  }
-  100% {
-    left: 4%;
-    top: 5px;
-    transform: scale(1);
-  }
+.main-wick {
+  font-size: 3.8rem;
+  transform: translateY(-4px);
+  filter: drop-shadow(0 0 35px rgba(255, 215, 0, 1));
+  animation: diyaFlicker 1.8s infinite alternate ease-in-out;
 }
 
-/* Clockwise Aarti around Tulsi Shrine */
-.tulsi-clockwise-aarti-diya {
-  position: absolute;
-  inset: 0;
+@keyframes diyaFlicker {
+  0% { transform: translateY(-4px) scale(1); filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.9)); }
+  50% { transform: translateY(-6px) scale(1.06); filter: drop-shadow(0 0 45px rgba(255, 140, 0, 1)); }
+  100% { transform: translateY(-3px) scale(0.98); filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.8)); }
+}
+
+.grand-diya-aura-glow {
+  width: 250px;
+  height: 60px;
+  background: radial-gradient(ellipse at center, rgba(255, 165, 0, 0.4), transparent 75%);
+  border-radius: 50%;
+  margin-top: -20px;
   pointer-events: none;
-  z-index: 20;
 }
 
-.tulsi-clockwise-aarti-diya .aarti-flame {
-  font-size: 2.8rem;
-  position: absolute;
-  filter: drop-shadow(0 0 25px rgba(50, 205, 50, 1));
-  animation: tulsiClockwiseAarti 6s linear infinite;
-}
-
-@keyframes tulsiClockwiseAarti {
-  0% { left: 75%; top: 5px; }
-  25% { left: 92%; top: 5px; }
-  50% { left: 92%; top: 75px; }
-  75% { left: 75%; top: 75px; }
-  100% { left: 75%; top: 5px; }
+.grand-diya-caption {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  color: var(--gold-glow);
+  letter-spacing: 1.5px;
+  margin-top: 0.3rem;
 }
 
 /* Shrine Action Buttons */
@@ -258,8 +246,14 @@
   transform: translateY(-2px);
 }
 
-.aarti-btn { border-color: rgba(255, 140, 0, 0.6); }
-.tulsi-aarti-btn { border-color: rgba(0, 255, 127, 0.6); }
+.grand-diya-btn { border-color: rgba(255, 140, 0, 0.7); }
+.grand-diya-btn.lit {
+  background: linear-gradient(135deg, var(--saffron), var(--gold));
+  color: var(--dark-stone);
+  font-weight: 700;
+  box-shadow: 0 0 20px rgba(255, 140, 0, 0.7);
+}
+
 .tulsi-btn { border-color: rgba(34, 139, 34, 0.6); }
 .lotus-btn { border-color: rgba(255, 105, 180, 0.6); }
 
@@ -491,5 +485,8 @@
   .pooja-btn {
     font-size: 0.74rem;
     padding: 0.4rem 0.7rem;
+  }
+  .main-wick {
+    font-size: 2.8rem;
   }
 }
