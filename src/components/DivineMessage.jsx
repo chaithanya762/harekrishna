@@ -8,7 +8,7 @@ const MOOD_DATA = {
     icon: '🙏',
     deityImage: '/assets/jagannath.jpg',
     deityName: 'Sri Puri Jagannath Swamy',
-    rounds: [27, 54, 108],
+    rounds: [1, 27, 54, 108],
     recommended: 54
   },
   anxious: { 
@@ -17,7 +17,7 @@ const MOOD_DATA = {
     icon: '🙏',
     deityImage: '/assets/krishna.jpg',
     deityName: 'Sri Krishna Bhagavan',
-    rounds: [27, 54],
+    rounds: [1, 27, 54],
     recommended: 27
   },
   peaceful: { 
@@ -26,7 +26,7 @@ const MOOD_DATA = {
     icon: '🕊️',
     deityImage: '/assets/krishna.jpg',
     deityName: 'Sri Radha Krishna',
-    rounds: [8, 16, 27],
+    rounds: [1, 8, 16, 27],
     recommended: 8
   },
   lost: { 
@@ -35,7 +35,7 @@ const MOOD_DATA = {
     icon: '🔥',
     deityImage: '/assets/jagannath.jpg',
     deityName: 'Sri Jagannath Parambrahma',
-    rounds: [54, 108],
+    rounds: [1, 54, 108],
     recommended: 108
   }
 };
@@ -43,12 +43,30 @@ const MOOD_DATA = {
 export default function DivineMessage({ mood, onProceed }) {
   const data = MOOD_DATA[mood] || MOOD_DATA['peaceful'];
   const [selectedRounds, setSelectedRounds] = useState(data.recommended);
+  const [isCustomMode, setIsCustomMode] = useState(false);
+  const [customInputValue, setCustomInputValue] = useState('');
+
+  const handleSelectPreset = (r) => {
+    setIsCustomMode(false);
+    setSelectedRounds(r);
+  };
+
+  const handleCustomInputChange = (e) => {
+    const val = e.target.value;
+    setCustomInputValue(val);
+    const num = parseInt(val, 10);
+    if (!isNaN(num) && num > 0) {
+      setIsCustomMode(true);
+      setSelectedRounds(num);
+    }
+  };
 
   const handleStart = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    const finalRounds = Math.max(1, selectedRounds || data.recommended);
     if (onProceed) {
-      onProceed(selectedRounds || data.recommended);
+      onProceed(finalRounds);
     }
   };
 
@@ -68,15 +86,15 @@ export default function DivineMessage({ mood, onProceed }) {
         <p className="message-text">{data.message}</p>
 
         <div className="rounds-selection fade-in-up">
-          <p className="select-prompt">Select Sacred Rounds to Chant (108 beads each)</p>
+          <p className="select-prompt">Choose how many times/rounds you will chant (108 beads each)</p>
           
           <div className="rounds-options">
             {data.rounds.map(r => (
               <div key={r} className="round-option-wrapper">
                 <button 
                   type="button"
-                  className={`round-button ${selectedRounds === r ? 'selected' : ''} ${data.recommended === r ? 'recommended' : ''}`}
-                  onClick={() => setSelectedRounds(r)}
+                  className={`round-button ${!isCustomMode && selectedRounds === r ? 'selected' : ''} ${data.recommended === r ? 'recommended' : ''}`}
+                  onClick={() => handleSelectPreset(r)}
                 >
                   {r}
                 </button>
@@ -86,13 +104,28 @@ export default function DivineMessage({ mood, onProceed }) {
               </div>
             ))}
           </div>
+
+          {/* Provision for Custom Number of Rounds / Chants */}
+          <div className="custom-rounds-box">
+            <label htmlFor="customRoundsInput" className="custom-rounds-label">✨ Or enter your custom number of rounds:</label>
+            <input 
+              id="customRoundsInput"
+              type="number"
+              min="1"
+              max="1008"
+              placeholder="e.g. 5, 12, 108..."
+              value={customInputValue}
+              onChange={handleCustomInputChange}
+              className={`custom-rounds-input ${isCustomMode ? 'active' : ''}`}
+            />
+          </div>
           
           <button 
             type="button"
             className="proceed-button" 
             onClick={handleStart}
           >
-            Begin Sacred Chanting ({selectedRounds || data.recommended} × 108) &rarr;
+            Begin Sacred Chanting ({selectedRounds || data.recommended} Rounds = {(selectedRounds || data.recommended) * 108} Chants) &rarr;
           </button>
         </div>
       </div>
