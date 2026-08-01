@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import FestivalCalendarModal from './FestivalCalendarModal';
+import { getNextUpcomingEvents } from '../utils/calendar';
 import { useSound } from '../hooks/useSound';
 import './MoodSelector.css';
 
@@ -29,6 +30,7 @@ export default function MoodSelector({ onMoodSelect }) {
   const [customSankalpa, setCustomSankalpa] = useState('');
 
   const { playBell, getAudioContext } = useSound();
+  const { nextEkadashi, nextFestival } = getNextUpcomingEvents();
 
   const handleClick = (id) => {
     setClickedId(id);
@@ -121,10 +123,12 @@ export default function MoodSelector({ onMoodSelect }) {
         </div>
       )}
 
-      {/* Upcoming Ekadashi & Festival Calendar Badge */}
+      {/* Dynamic Upcoming Ekadashi & Festival Calendar Badge */}
       <div className="festival-header-badge" onClick={() => setShowFestivalModal(true)} title="View Upcoming Ekadashi Fasting Dates & Festivals">
         <span className="fhb-icon">🚩</span>
-        <span className="fhb-text">Upcoming: <strong>Kamada Ekadashi Fasting</strong> & <strong>Puri Ratha Yatra</strong> &rarr;</span>
+        <span className="fhb-text">
+          Next Upcoming: <strong>{nextEkadashi?.title} ({nextEkadashi?.dateStr.split(',')[0]})</strong> & <strong>{nextFestival?.title} ({nextFestival?.dateStr.split(',')[0]})</strong> &rarr;
+        </span>
       </div>
 
       {/* Royal Temple Altar Shrine Banner featuring 3 Deities + Tulsi Maharani Vrindavan Shrine */}
