@@ -20,6 +20,8 @@
   color: var(--color-cream);
   font-family: 'Cormorant Garamond', serif;
   overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* Background Effects */
@@ -75,6 +77,8 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .icon-btn:hover {
@@ -202,12 +206,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -55%);
+  background: radial-gradient(circle, rgba(42, 31, 21, 0.9) 0%, rgba(15, 10, 7, 0.98) 100%);
 }
 
 .central-deity-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: all 0.5s ease;
   animation: breathe 6s infinite ease-in-out;
 }
@@ -264,12 +269,16 @@
   overflow: hidden;
   border: 3px solid var(--color-gold);
   box-shadow: 0 0 35px var(--color-gold);
+  background: radial-gradient(circle, rgba(42, 31, 21, 0.9) 0%, rgba(15, 10, 7, 0.98) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .completion-deity-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .chant-btn-sub {
@@ -281,11 +290,10 @@
   color: var(--color-gold-bright);
 }
 
-
-/* Chant Button */
+/* 100% Instant Response Chant Button */
 .chant-button {
-  width: 100px;
-  height: 100px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   border: 2px solid var(--color-gold);
   background: radial-gradient(circle at center, var(--color-saffron), var(--color-temple-red));
@@ -294,38 +302,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 20px rgba(255, 153, 51, 0.4);
-  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 25px rgba(255, 153, 51, 0.5);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
   position: relative;
   overflow: hidden;
-}
-
-.chant-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(255,215,0,0.8) 0%, transparent 60%);
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-  transition: transform 0.3s, opacity 0.3s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .chant-button:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(255, 153, 51, 0.6);
+  box-shadow: 0 0 35px rgba(255, 153, 51, 0.7);
 }
 
-.chant-button:active {
-  transform: scale(0.95);
-}
-
-.chant-button:active::before {
-  transform: translate(-50%, -50%) scale(2);
-  opacity: 0.5;
-  transition: 0s;
+.chant-button:active,
+.chant-button.pressed {
+  transform: scale(0.92);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
 }
 
 .chant-button:disabled {
@@ -335,10 +330,11 @@
 }
 
 .om-symbol {
-  font-size: 40px;
+  font-size: 44px;
   line-height: 1;
-  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
   z-index: 2;
+  pointer-events: none;
 }
 
 /* Pause Overlay */
@@ -348,8 +344,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -452,6 +448,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 600;
+  touch-action: manipulation;
 }
 
 .primary-btn {
@@ -514,5 +511,12 @@
   }
   .shimmer-text {
     font-size: 2.2rem;
+  }
+  .chant-button {
+    width: 100px;
+    height: 100px;
+  }
+  .om-symbol {
+    font-size: 38px;
   }
 }

@@ -50,8 +50,9 @@ const ChantingSession = ({
   const [isComplete, setIsComplete] = useState(false);
   const [showFlash, setShowFlash] = useState(false);
   const [pulseLevel, setPulseLevel] = useState(0);
+  const [isPressed, setIsPressed] = useState(false);
 
-  const { playFlute, playBell } = useSound();
+  const { playTap, playBell, getAudioContext } = useSound();
 
   const selectedMantraData = defaultMantras[mantra] || defaultMantras.panchatatva;
   const mantraLines = customMantraLines || selectedMantraData.lines;
@@ -61,44 +62,59 @@ const ChantingSession = ({
   const activeLineIndex = Math.floor(currentCount % (mantraLines.length || 1));
   const glowIntensity = currentCount / 108;
 
-  const handleChant = useCallback(() => {
+  // 100% Instant & Reliable Chant Event Handler
+  const handleChant = useCallback((e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     if (isPaused || isComplete) return;
 
-    if (Math.random() > 0.4) {
-      playFlute(0.3);
-    } else {
-      playBell(0.25);
+    // Ensure Web Audio context is active
+    getAudioContext();
+
+    // Haptic feedback on mobile if supported
+    if (navigator.vibrate) {
+      navigator.vibrate(20);
     }
+
+    // Play instant tap sound
+    playTap();
+
+    // Button visual press trigger
+    setIsPressed(true);
+    setTimeout(() => setIsPressed(false), 120);
 
     setCurrentCount((prev) => {
       const next = prev + 1;
       
+      // Milestone sounds & flashes
       if (next % 27 === 0 && next !== 108) {
         setShowFlash(true);
-        setTimeout(() => setShowFlash(false), 500);
-        playBell(0.4);
+        setTimeout(() => setShowFlash(false), 400);
+        playBell();
       }
       if (next % 10 === 0) {
         setPulseLevel(Date.now());
       }
 
       if (next === 108) {
-        playBell(0.5);
+        playBell();
         setTimeout(() => {
           if (currentRound < totalRounds) {
             setCurrentCount(0);
-            setCurrentRound(r => r + 1);
+            setCurrentRound((r) => r + 1);
             setShowFlash(true);
             setTimeout(() => setShowFlash(false), 500);
           } else {
             setIsComplete(true);
           }
-        }, 800);
+        }, 600);
         return 108;
       }
       return next;
     });
-  }, [isPaused, isComplete, currentRound, totalRounds, playFlute, playBell]);
+  }, [isPaused, isComplete, currentRound, totalRounds, playTap, playBell, getAudioContext]);
 
   const togglePause = useCallback(() => {
     if (!isComplete) setIsPaused((p) => !p);
@@ -110,8 +126,10 @@ const ChantingSession = ({
     }
   }, [onBack]);
 
+  // Keyboard Support: Space / Enter to chant instantly
   useEffect(() => {
     const handleKeyDown = (e) => {
+      if (e.repeat) return; // Prevent keyholding repeat lags
       if (e.code === 'Space' || e.code === 'Enter') {
         e.preventDefault();
         handleChant();
@@ -232,11 +250,12 @@ const ChantingSession = ({
           </div>
         </div>
 
+        {/* Instant Response Om Chant Button supporting Pointer, Touch, and Click */}
         <button 
-          className="chant-button" 
-          onClick={handleChant}
+          className={`chant-button ${isPressed ? 'pressed' : ''}`} 
+          onPointerDown={handleChant}
           disabled={isPaused}
-          title="Chant (Space/Enter)"
+          title="Tap or press Space/Enter to Chant"
         >
           <span className="om-symbol">ॐ</span>
           <span className="chant-btn-sub">CHANT</span>
