@@ -1,212 +1,225 @@
 import { useRef, useCallback, useEffect } from 'react';
 
+// Web Audio Synthesizer for Vrindavan Bansuri Flute, Temple Bells, Om Drone & Sweet Kirtan Melody
 export function useSound() {
-  const audioContextRef = useRef(null);
-  const ambientOscillatorRef = useRef(null);
+  const audioCtxRef = useRef(null);
+  const ambientOscRef = useRef(null);
   const ambientGainRef = useRef(null);
+  const kirtanTimerRef = useRef(null);
+  const isKirtanPlayingRef = useRef(false);
 
-  const initAudioContext = useCallback(() => {
-    if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
+  // Lazy AudioContext Initialization
+  const getAudioContext = useCallback(() => {
+    if (!audioCtxRef.current) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) {
+        audioCtxRef.current = new AudioCtx();
+      }
     }
-    if (audioContextRef.current.state === 'suspended') {
-      audioContextRef.current.resume();
+    if (audioCtxRef.current && audioCtxRef.current.state === 'suspended') {
+      audioCtxRef.current.resume();
+    }
+    return audioCtxRef.current;
+  }, []);
+
+  // 🔔 Temple Bell Chime
+  const playBell = useCallback(() => {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const now = ctx.currentTime;
+    const osc1 = ctx.createOscillator();
+    const osc2 = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc1.type = 'sine';
+    osc2.type = 'sine';
+
+    // 800Hz & 1200Hz harmonic chime
+    osc1.frequency.setValueAtTime(800, now);
+    osc2.frequency.setValueAtTime(1200, now);
+
+    gain.gain.setValueAtTime(0.3, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc1.start(now);
+    osc2.start(now);
+    osc1.stop(now + 1.2);
+    osc2.stop(now + 1.2);
+  }, [getAudioContext]);
+
+  // 🔘 Tap / Bead Click Sound
+  const playTap = useCallback(() => {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(520, now);
+    osc.frequency.exponentialRampToValueAtTime(260, now + 0.06);
+
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.06);
+  }, [getAudioContext]);
+
+  // 🪈 Play Single Bansuri Flute Note
+  const playFluteNote = useCallback((freq, duration = 1.2, delay = 0) => {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const now = ctx.currentTime + delay;
+    const osc = ctx.createOscillator();
+    const vibrato = ctx.createOscillator();
+    const vibratoGain = ctx.createGain();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, now);
+
+    // Warm Bansuri Vibrato
+    vibrato.frequency.setValueAtTime(5.5, now); // 5.5 Hz vibrato rate
+    vibratoGain.gain.setValueAtTime(4, now); // Vibrato depth
+    vibrato.connect(osc.frequency);
+
+    // Smooth Envelope
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(0.15, now + 0.15);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    vibrato.start(now);
+    osc.start(now);
+    vibrato.stop(now + duration);
+    osc.stop(now + duration);
+  }, [getAudioContext]);
+
+  // 🎶 Sweet Hare Krishna Vrindavan Kirtan Melodic Loop
+  // Hare Krishna Melody Scale Frequencies (Hz): E4, G4, A4, B4, D5, E5
+  const startSweetKirtanSong = useCallback(() => {
+    if (isKirtanPlayingRef.current) return;
+    isKirtanPlayingRef.current = true;
+
+    const notes = [
+      { freq: 329.63, dur: 1.0 }, // E4 - Hare
+      { freq: 392.00, dur: 1.0 }, // G4 - Krishna
+      { freq: 440.00, dur: 1.2 }, // A4 - Hare
+      { freq: 493.88, dur: 1.2 }, // B4 - Krishna
+      { freq: 587.33, dur: 1.4 }, // D5 - Krishna
+      { freq: 659.25, dur: 1.6 }, // E5 - Krishna
+      { freq: 493.88, dur: 1.2 }, // B4 - Hare
+      { freq: 440.00, dur: 1.4 }, // A4 - Hare
+      
+      { freq: 392.00, dur: 1.0 }, // G4 - Hare
+      { freq: 440.00, dur: 1.0 }, // A4 - Rama
+      { freq: 493.88, dur: 1.2 }, // B4 - Hare
+      { freq: 587.33, dur: 1.2 }, // D5 - Rama
+      { freq: 493.88, dur: 1.4 }, // B4 - Rama
+      { freq: 440.00, dur: 1.6 }, // A4 - Rama
+      { freq: 392.00, dur: 1.2 }, // G4 - Hare
+      { freq: 329.63, dur: 1.6 }  // E4 - Hare
+    ];
+
+    let noteIdx = 0;
+
+    const playNextNote = () => {
+      if (!isKirtanPlayingRef.current) return;
+      const currentNote = notes[noteIdx];
+      playFluteNote(currentNote.freq, currentNote.dur);
+      noteIdx = (noteIdx + 1) % notes.length;
+      kirtanTimerRef.current = setTimeout(playNextNote, currentNote.dur * 850);
+    };
+
+    playNextNote();
+  }, [playFluteNote]);
+
+  const stopSweetKirtanSong = useCallback(() => {
+    isKirtanPlayingRef.current = false;
+    if (kirtanTimerRef.current) {
+      clearTimeout(kirtanTimerRef.current);
+      kirtanTimerRef.current = null;
     }
   }, []);
 
-  // Vrindavan Bansuri Flute Synthesis
-  const playFlute = useCallback((volume = 0.35) => {
-    initAudioContext();
-    const ctx = audioContextRef.current;
-    if (!ctx) return;
+  // 🕉️ Ambient Om Drone
+  const startAmbient = useCallback(() => {
+    const ctx = getAudioContext();
+    if (!ctx || ambientOscRef.current) return;
 
-    const t = ctx.currentTime;
-    
-    // Vrindavan raga scale notes (D5, F#5, A5, B5, D6)
-    const notes = [587.33, 739.99, 880.00, 987.77, 1174.66];
-    const freq = notes[Math.floor(Math.random() * notes.length)];
-
-    const osc = ctx.createOscillator();
-    const subOsc = ctx.createOscillator();
-    const gainNode = ctx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(freq, t);
-
-    // Warm undertone
-    subOsc.type = 'sine';
-    subOsc.frequency.setValueAtTime(freq / 2, t);
-
-    // Expressive Vibrato (Flute feel)
-    const lfo = ctx.createOscillator();
-    lfo.type = 'sine';
-    lfo.frequency.value = 5.5; // Hz
-    const lfoGain = ctx.createGain();
-    lfoGain.gain.value = 6;
-    lfo.connect(lfoGain);
-    lfoGain.connect(osc.frequency);
-    lfo.start(t);
-    lfo.stop(t + 1.8);
-
-    // Soft Breath Envelope
-    gainNode.gain.setValueAtTime(0, t);
-    gainNode.gain.linearRampToValueAtTime(volume, t + 0.12);
-    gainNode.gain.exponentialRampToValueAtTime(volume * 0.4, t + 0.8);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, t + 1.8);
-
-    osc.connect(gainNode);
-    subOsc.connect(gainNode);
-    gainNode.connect(ctx.destination);
-
-    osc.start(t);
-    subOsc.start(t);
-    osc.stop(t + 1.8);
-    subOsc.stop(t + 1.8);
-  }, [initAudioContext]);
-
-  // Temple Bell Sound
-  const playBell = useCallback((volume = 0.3) => {
-    initAudioContext();
-    const ctx = audioContextRef.current;
-    if (!ctx) return;
-
-    const t = ctx.currentTime;
+    const now = ctx.currentTime;
     const osc1 = ctx.createOscillator();
     const osc2 = ctx.createOscillator();
-    const gainNode = ctx.createGain();
+    const gain = ctx.createGain();
 
     osc1.type = 'sine';
-    osc1.frequency.setValueAtTime(800, t);
-    
-    const lfo = ctx.createOscillator();
-    lfo.type = 'sine';
-    lfo.frequency.value = 6;
-    const lfoGain = ctx.createGain();
-    lfoGain.gain.value = 5;
-    lfo.connect(lfoGain);
-    lfoGain.connect(osc1.frequency);
-    lfo.start(t);
-    lfo.stop(t + 2);
-
     osc2.type = 'sine';
-    osc2.frequency.setValueAtTime(1200, t);
 
-    gainNode.gain.setValueAtTime(0, t);
-    gainNode.gain.linearRampToValueAtTime(volume, t + 0.01);
-    gainNode.gain.exponentialRampToValueAtTime(volume * 0.1, t + 0.3);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, t + 2);
+    osc1.frequency.setValueAtTime(136.1, now); // 136.1 Hz Om frequency
+    osc2.frequency.setValueAtTime(272.2, now); // 272.2 Hz Octave
 
-    osc1.connect(gainNode);
-    osc2.connect(gainNode);
-    gainNode.connect(ctx.destination);
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.06, now + 2);
 
-    osc1.start(t);
-    osc2.start(t);
-    osc1.stop(t + 2);
-    osc2.stop(t + 2);
-  }, [initAudioContext]);
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(ctx.destination);
 
-  // Tap Feedback
-  const playTap = useCallback((volume = 0.1) => {
-    initAudioContext();
-    const ctx = audioContextRef.current;
-    if (!ctx) return;
+    osc1.start(now);
+    osc2.start(now);
 
-    const t = ctx.currentTime;
-    const osc = ctx.createOscillator();
-    const gainNode = ctx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(600, t);
-
-    gainNode.gain.setValueAtTime(0, t);
-    gainNode.gain.linearRampToValueAtTime(volume, t + 0.01);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
-
-    osc.connect(gainNode);
-    gainNode.connect(ctx.destination);
-
-    osc.start(t);
-    osc.stop(t + 0.05);
-  }, [initAudioContext]);
-
-  // Continuous Om & Tanpura Drone
-  const startAmbient = useCallback((volume = 0.2) => {
-    initAudioContext();
-    const ctx = audioContextRef.current;
-    if (!ctx) return;
-
-    if (ambientOscillatorRef.current) return;
-
-    const t = ctx.currentTime;
-    
-    const masterGain = ctx.createGain();
-    masterGain.gain.setValueAtTime(0, t);
-    masterGain.gain.linearRampToValueAtTime(volume, t + 2);
-    masterGain.connect(ctx.destination);
-    ambientGainRef.current = masterGain;
-
-    const osc1 = ctx.createOscillator();
-    osc1.type = 'sine';
-    osc1.frequency.value = 136.1; // Om fundamental
-    const gain1 = ctx.createGain();
-    gain1.gain.value = 0.06;
-    osc1.connect(gain1);
-    gain1.connect(masterGain);
-
-    const osc2 = ctx.createOscillator();
-    osc2.type = 'sine';
-    osc2.frequency.value = 272.2; // Octave
-    const gain2 = ctx.createGain();
-    gain2.gain.value = 0.03;
-    osc2.connect(gain2);
-    gain2.connect(masterGain);
-
-    osc1.start(t);
-    osc2.start(t);
-
-    ambientOscillatorRef.current = { osc1, osc2 };
-  }, [initAudioContext]);
+    ambientOscRef.current = { osc1, osc2 };
+    ambientGainRef.current = gain;
+  }, [getAudioContext]);
 
   const stopAmbient = useCallback(() => {
-    const ctx = audioContextRef.current;
-    if (!ctx || !ambientGainRef.current || !ambientOscillatorRef.current) return;
+    if (!ambientGainRef.current || !audioCtxRef.current) return;
 
-    const t = ctx.currentTime;
-    ambientGainRef.current.gain.setValueAtTime(ambientGainRef.current.gain.value, t);
-    ambientGainRef.current.gain.linearRampToValueAtTime(0, t + 1);
+    const ctx = audioCtxRef.current;
+    const now = ctx.currentTime;
 
-    const oscs = ambientOscillatorRef.current;
+    ambientGainRef.current.gain.linearRampToValueAtTime(0.001, now + 1);
     setTimeout(() => {
-      if (oscs.osc1) oscs.osc1.stop();
-      if (oscs.osc2) oscs.osc2.stop();
-      ambientOscillatorRef.current = null;
+      if (ambientOscRef.current) {
+        ambientOscRef.current.osc1.stop();
+        ambientOscRef.current.osc2.stop();
+        ambientOscRef.current = null;
+        ambientGainRef.current = null;
+      }
     }, 1000);
   }, []);
 
-  const setAmbientVolume = useCallback((volume) => {
-    if (ambientGainRef.current && audioContextRef.current) {
-      const t = audioContextRef.current.currentTime;
-      ambientGainRef.current.gain.linearRampToValueAtTime(volume, t + 0.1);
-    }
-  }, []);
-
-  const cleanup = useCallback(() => {
-    if (audioContextRef.current) {
-      if (ambientOscillatorRef.current) {
-        ambientOscillatorRef.current.osc1.stop();
-        ambientOscillatorRef.current.osc2.stop();
-      }
-      audioContextRef.current.close();
-      audioContextRef.current = null;
-      ambientOscillatorRef.current = null;
-      ambientGainRef.current = null;
-    }
-  }, []);
-
   useEffect(() => {
-    return cleanup;
-  }, [cleanup]);
+    return () => {
+      stopSweetKirtanSong();
+      stopAmbient();
+      if (audioCtxRef.current) {
+        audioCtxRef.current.close();
+      }
+    };
+  }, [stopSweetKirtanSong, stopAmbient]);
 
-  return { playFlute, playBell, playTap, startAmbient, stopAmbient, setAmbientVolume, cleanup, audioContextRef };
+  return {
+    playBell,
+    playTap,
+    playFluteNote,
+    startSweetKirtanSong,
+    stopSweetKirtanSong,
+    startAmbient,
+    stopAmbient,
+    getAudioContext
+  };
 }

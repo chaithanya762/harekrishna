@@ -122,7 +122,7 @@ export default function App() {
         )}
       </main>
 
-      <AudioManager />
+      <AudioManager currentStep={currentStep} />
 
       {/* Footer is strictly rendered ONLY when scrolling non-chanting screens */}
       {currentStep !== 'chanting' && <Footer />}

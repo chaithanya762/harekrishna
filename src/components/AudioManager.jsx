@@ -2,120 +2,89 @@ import React, { useState, useEffect } from 'react';
 import { useSound } from '../hooks/useSound';
 import './AudioManager.css';
 
-export default function AudioManager() {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [fluteEnabled, setFluteEnabled] = useState(true);
-  const [bellsEnabled, setBellsEnabled] = useState(true);
-  const [ambientEnabled, setAmbientEnabled] = useState(false);
-  const [ambientVolume, setAmbientVolumeState] = useState(0.2);
+export default function AudioManager({ currentStep }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isKirtanPlaying, setIsKirtanPlaying] = useState(false);
+  const [isOmPlaying, setIsOmPlaying] = useState(false);
 
-  const { playFlute, playBell, playTap, startAmbient, stopAmbient, setAmbientVolume } = useSound();
+  const { 
+    playBell, 
+    startSweetKirtanSong, 
+    stopSweetKirtanSong, 
+    startAmbient, 
+    stopAmbient,
+    getAudioContext 
+  } = useSound();
 
-  useEffect(() => {
-    if (ambientEnabled) {
-      startAmbient(ambientVolume);
+  // Auto-play / stop management based on current step
+  const toggleKirtan = () => {
+    getAudioContext();
+    if (isKirtanPlaying) {
+      stopSweetKirtanSong();
+      setIsKirtanPlaying(false);
     } else {
+      startSweetKirtanSong();
+      setIsKirtanPlaying(true);
+    }
+  };
+
+  const toggleOm = () => {
+    getAudioContext();
+    if (isOmPlaying) {
       stopAmbient();
+      setIsOmPlaying(false);
+    } else {
+      startAmbient();
+      setIsOmPlaying(true);
     }
-  }, [ambientEnabled, startAmbient, stopAmbient]);
-
-  useEffect(() => {
-    if (ambientEnabled) {
-      setAmbientVolume(ambientVolume);
-    }
-  }, [ambientVolume, ambientEnabled, setAmbientVolume]);
-
-  const handleToggle = () => {
-    playTap();
-    setIsExpanded(!isExpanded);
-  };
-
-  const handleFluteToggle = () => {
-    playTap();
-    const newState = !fluteEnabled;
-    setFluteEnabled(newState);
-    if (newState) {
-      playFlute(0.35);
-    }
-  };
-
-  const handleBellsToggle = () => {
-    playTap();
-    const newState = !bellsEnabled;
-    setBellsEnabled(newState);
-    if (newState) {
-      playBell(0.3);
-    }
-  };
-
-  const handleAmbientToggle = () => {
-    playTap();
-    setAmbientEnabled(!ambientEnabled);
   };
 
   return (
-    <div className={`audio-manager ${isExpanded ? 'expanded' : ''}`}>
-      {!isExpanded ? (
-        <button className="audio-toggle-btn" onClick={handleToggle} aria-label="Audio settings">
-          🎶
-        </button>
-      ) : (
-        <div className="audio-panel glass-panel">
+    <div className="audio-manager-container">
+      {/* Floating Action Button */}
+      <button 
+        className={`audio-fab ${isKirtanPlaying || isOmPlaying ? 'playing' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
+        title="Divine Background Music Controls"
+      >
+        {isKirtanPlaying ? '🎶' : '🪈'}
+      </button>
+
+      {/* Expanded Control Panel */}
+      {isOpen && (
+        <div className="audio-panel glass-panel divine-reveal">
           <div className="audio-panel-header">
-            <h4>🎶 Vrindavan Soundscape</h4>
-            <button className="close-btn" onClick={handleToggle} aria-label="Close">
-              ×
-            </button>
-          </div>
-          
-          {/* Flute */}
-          <div className="audio-control">
-            <div className="audio-control-header">
-              <label>🪈 Vrindavan Flute</label>
-              <button 
-                className={`switch ${fluteEnabled ? 'on' : 'off'}`} 
-                onClick={handleFluteToggle}
-              >
-                <div className="switch-thumb" />
-              </button>
-            </div>
+            <h4 className="audio-panel-title">🎶 Sacred Music Controls</h4>
+            <button className="audio-close-btn" onClick={() => setIsOpen(false)}>×</button>
           </div>
 
-          {/* Bells */}
-          <div className="audio-control">
-            <div className="audio-control-header">
-              <label>🔔 Temple Bells</label>
+          <div className="audio-control-group">
+            <div className="audio-row">
+              <span className="audio-label">🪈 Vrindavan Hare Krishna Flute</span>
               <button 
-                className={`switch ${bellsEnabled ? 'on' : 'off'}`} 
-                onClick={handleBellsToggle}
+                className={`audio-toggle-btn ${isKirtanPlaying ? 'active' : ''}`}
+                onClick={toggleKirtan}
               >
-                <div className="switch-thumb" />
+                {isKirtanPlaying ? 'Pause ⏸️' : 'Play 🎶'}
               </button>
             </div>
-          </div>
 
-          {/* Ambient Drone */}
-          <div className="audio-control">
-            <div className="audio-control-header">
-              <label>🕉️ Celestial Om Drone</label>
+            <div className="audio-row">
+              <span className="audio-label">🕉️ Om Meditation Drone</span>
               <button 
-                className={`switch ${ambientEnabled ? 'on' : 'off'}`} 
-                onClick={handleAmbientToggle}
+                className={`audio-toggle-btn ${isOmPlaying ? 'active' : ''}`}
+                onClick={toggleOm}
               >
-                <div className="switch-thumb" />
+                {isOmPlaying ? 'Stop ⏹️' : 'Start 🕉️'}
               </button>
             </div>
-            {ambientEnabled && (
-              <input 
-                type="range" 
-                min="0" 
-                max="1" 
-                step="0.05"
-                value={ambientVolume}
-                onChange={(e) => setAmbientVolumeState(parseFloat(e.target.value))}
-                className="gold-range"
-              />
-            )}
+
+            <div className="audio-row">
+              <span className="audio-label">🔔 Test Temple Bell</span>
+              <button className="audio-toggle-btn bell-btn" onClick={() => { getAudioContext(); playBell(); }}>
+                Ring 🔔
+              </button>
+            </div>
           </div>
         </div>
       )}

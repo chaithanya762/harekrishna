@@ -3,13 +3,13 @@
   inset: 0;
   z-index: -1;
   overflow: hidden;
-  background-color: #1A1410;
+  background-color: #120D0A;
 }
 
 .base-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, #1A1410 0%, #2A1F15 30%, #1A1410 100%);
+  background: linear-gradient(180deg, #120D0A 0%, #201712 40%, #120D0A 100%);
 }
 
 .rath-yatra-layer {
@@ -22,12 +22,12 @@
     90deg,
     transparent 0,
     transparent 40px,
-    rgba(255, 215, 0, 0.03) 40px,
-    rgba(255, 215, 0, 0.03) 80px
+    rgba(212, 160, 23, 0.02) 40px,
+    rgba(212, 160, 23, 0.02) 80px
   );
   background-size: 160px 100%;
   animation: rathYatraScroll 30s linear infinite;
-  border-top: 1px solid rgba(255, 215, 0, 0.05);
+  border-top: 1px solid rgba(212, 160, 23, 0.04);
   mask-image: linear-gradient(to top, black, transparent);
   -webkit-mask-image: linear-gradient(to top, black, transparent);
   will-change: transform;
@@ -50,9 +50,9 @@
 
 .smoke {
   position: absolute;
-  background: radial-gradient(circle, rgba(245, 238, 220, 0.03) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(245, 230, 204, 0.025) 0%, transparent 70%);
   border-radius: 50%;
-  filter: blur(40px);
+  filter: blur(50px);
   will-change: transform, opacity;
 }
 
@@ -79,20 +79,21 @@
   top: 10vh;
   left: 10vw;
   animation: smokeRise 30s infinite alternate ease-in-out;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.015) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(212, 160, 23, 0.01) 0%, transparent 70%);
 }
 
 @keyframes smokeRise {
   0% {
     transform: translate(0, 0) scale(1);
-    opacity: 0.4;
+    opacity: 0.3;
   }
   100% {
-    transform: translate(10vw, -15vh) scale(1.2);
-    opacity: 0.8;
+    transform: translate(10vw, -15vh) scale(1.15);
+    opacity: 0.6;
   }
 }
 
+/* Soft, ambient light glows with ZERO sharp yellow lines */
 .light-rays {
   position: absolute;
   inset: 0;
@@ -104,48 +105,43 @@
   position: absolute;
   top: -50%;
   height: 200%;
-  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.03), transparent);
+  filter: blur(40px);
   will-change: transform, opacity;
   transition: opacity 1s ease-in-out;
 }
 
 .ray-1 {
-  left: 30%;
-  width: 4vw;
+  left: 20%;
+  width: 15vw;
   transform: rotate(15deg);
-  animation: templeGlow 8s infinite alternate ease-in-out;
+  animation: templeGlow 10s infinite alternate ease-in-out;
 }
 
 .ray-2 {
   left: 50%;
-  width: 2vw;
+  width: 12vw;
   transform: rotate(-10deg);
-  animation: templeGlow 12s infinite alternate-reverse ease-in-out;
+  animation: templeGlow 14s infinite alternate-reverse ease-in-out;
   animation-delay: -2s;
 }
 
 .ray-3 {
-  left: 70%;
-  width: 6vw;
+  left: 75%;
+  width: 18vw;
   transform: rotate(25deg);
-  animation: templeGlow 10s infinite alternate ease-in-out;
+  animation: templeGlow 12s infinite alternate ease-in-out;
   animation-delay: -4s;
 }
 
 @keyframes templeGlow {
   0% {
-    opacity: 0.3;
-    transform: rotate(var(--rotation)) scaleY(1);
+    opacity: 0.2;
   }
   100% {
-    opacity: 1;
-    transform: rotate(var(--rotation)) scaleY(1.1);
+    opacity: 0.5;
   }
 }
-
-.ray-1 { --rotation: 15deg; }
-.ray-2 { --rotation: -10deg; }
-.ray-3 { --rotation: 25deg; }
 
 .glow-overlay {
   position: absolute;
@@ -157,6 +153,6 @@
 .vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.6) 100%);
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.75) 100%);
   pointer-events: none;
 }
