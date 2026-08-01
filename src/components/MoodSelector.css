@@ -96,10 +96,16 @@
   transition: all 0.6s ease;
 }
 
+/* Radiant Illumination facing UPWARD toward the Lord */
 .royal-shrine-banner.diya-illuminated {
-  background: linear-gradient(180deg, rgba(48, 35, 24, 0.95), rgba(28, 19, 13, 0.98));
+  background: linear-gradient(0deg, rgba(75, 52, 28, 0.95) 0%, rgba(38, 25, 16, 0.96) 60%, rgba(18, 13, 9, 0.98) 100%);
   border-color: var(--gold-glow);
-  box-shadow: 0 0 50px rgba(255, 140, 0, 0.35), 0 15px 40px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 60px rgba(255, 165, 0, 0.45), 0 15px 40px rgba(0, 0, 0, 0.8);
+}
+
+.diya-illuminated .deity-img {
+  box-shadow: 0 -10px 35px rgba(255, 215, 0, 0.9), 0 0 25px rgba(255, 140, 0, 0.7) !important;
+  transform: translateY(-2px);
 }
 
 .shrine-deities-grid {
@@ -111,6 +117,7 @@
   margin-bottom: 1.4rem;
   position: relative;
   width: 100%;
+  z-index: 5;
 }
 
 .deity-frame {
@@ -130,7 +137,7 @@
   border: 2.5px solid var(--gold);
   box-shadow: 0 0 20px rgba(212, 160, 23, 0.4);
   background: radial-gradient(circle, rgba(42, 31, 21, 0.9) 0%, rgba(15, 10, 7, 0.98) 100%);
-  transition: transform 0.4s ease;
+  transition: all 0.4s ease;
 }
 
 .tulsi-deity-img {
@@ -140,7 +147,7 @@
 
 .deity-frame:hover .deity-img {
   transform: scale(1.08);
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+  box-shadow: 0 0 35px rgba(255, 215, 0, 0.8);
 }
 
 .deity-label {
@@ -160,16 +167,18 @@
   background: rgba(34, 139, 34, 0.18) !important;
 }
 
-/* Grand Golden Diya Display */
-.grand-diya-display {
+/* Diya Display Container */
+.diya-display-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 1.2rem;
   position: relative;
+  width: 100%;
+  z-index: 6;
 }
 
-.grand-diya-flames {
+.diya-flames-row {
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -177,11 +186,15 @@
   filter: drop-shadow(0 0 25px rgba(255, 140, 0, 1));
 }
 
-.main-wick {
+.diya-center-wick {
   font-size: 3.8rem;
   transform: translateY(-4px);
   filter: drop-shadow(0 0 35px rgba(255, 215, 0, 1));
   animation: diyaFlicker 1.8s infinite alternate ease-in-out;
+}
+
+.diya-side-wick {
+  font-size: 2.4rem;
 }
 
 @keyframes diyaFlicker {
@@ -190,21 +203,33 @@
   100% { transform: translateY(-3px) scale(0.98); filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.8)); }
 }
 
-.grand-diya-aura-glow {
-  width: 250px;
-  height: 60px;
-  background: radial-gradient(ellipse at center, rgba(255, 165, 0, 0.4), transparent 75%);
-  border-radius: 50%;
-  margin-top: -20px;
+/* Upward Golden Light Beam facing the Lord */
+.diya-light-beam-facing-lord {
+  position: absolute;
+  bottom: 20px;
+  width: 90%;
+  max-width: 600px;
+  height: 220px;
+  background: radial-gradient(ellipse at bottom center, rgba(255, 215, 0, 0.6) 0%, rgba(255, 140, 0, 0.3) 45%, transparent 80%);
+  clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
   pointer-events: none;
+  animation: lightFacingLordPulse 2.2s infinite alternate ease-in-out;
+  z-index: 1;
 }
 
-.grand-diya-caption {
+@keyframes lightFacingLordPulse {
+  0% { opacity: 0.82; transform: scaleY(1); }
+  100% { opacity: 1; transform: scaleY(1.08); }
+}
+
+.diya-caption {
   font-family: var(--font-heading);
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   color: var(--gold-glow);
   letter-spacing: 1.5px;
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+  z-index: 5;
 }
 
 /* Shrine Action Buttons */
@@ -214,6 +239,7 @@
   align-items: center;
   gap: 0.6rem;
   width: 100%;
+  z-index: 6;
 }
 
 .pooja-btn-row {
@@ -246,8 +272,8 @@
   transform: translateY(-2px);
 }
 
-.grand-diya-btn { border-color: rgba(255, 140, 0, 0.7); }
-.grand-diya-btn.lit {
+.diya-toggle-btn { border-color: rgba(255, 140, 0, 0.7); }
+.diya-toggle-btn.lit {
   background: linear-gradient(135deg, var(--saffron), var(--gold));
   color: var(--dark-stone);
   font-weight: 700;
@@ -486,7 +512,7 @@
     font-size: 0.74rem;
     padding: 0.4rem 0.7rem;
   }
-  .main-wick {
+  .diya-center-wick {
     font-size: 2.8rem;
   }
 }

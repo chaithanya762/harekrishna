@@ -23,7 +23,7 @@ export default function MoodSelector({ onMoodSelect }) {
   const [lotusFlowers, setLotusFlowers] = useState([]);
   const [tulsiLeaves, setTulsiLeaves] = useState([]);
   const [offeringText, setOfferingText] = useState('');
-  const [isGrandDiyaLit, setIsGrandDiyaLit] = useState(false);
+  const [isDiyaLit, setIsDiyaLit] = useState(false);
   const [showFestivalModal, setShowFestivalModal] = useState(false);
   const [sankalpaVow, setSankalpaVow] = useState(SANKALPA_OPTIONS[2]);
   const [customSankalpa, setCustomSankalpa] = useState('');
@@ -75,17 +75,17 @@ export default function MoodSelector({ onMoodSelect }) {
     }, 2800);
   };
 
-  // 🪔 Light Grand Divine Diya (Deepam)
-  const handleToggleGrandDiya = () => {
+  // 🪔 Light Divine Diya (Deepam facing the Lord)
+  const handleToggleDiya = () => {
     getAudioContext();
     playBell(0.6);
-    const nextState = !isGrandDiyaLit;
-    setIsGrandDiyaLit(nextState);
+    const nextState = !isDiyaLit;
+    setIsDiyaLit(nextState);
 
     if (nextState) {
-      setOfferingText('🪔 Grand Divine Diya Lit at the Sacred Feet of the Deities! 🪔');
+      setOfferingText('🪔 Sacred Diya Lit facing the Lotus Feet of the Lord! 🪔');
     } else {
-      setOfferingText('🪔 Grand Diya Extinguished');
+      setOfferingText('🪔 Sacred Diya Extinguished');
     }
 
     if (navigator.vibrate) {
@@ -128,7 +128,7 @@ export default function MoodSelector({ onMoodSelect }) {
       </div>
 
       {/* Royal Temple Altar Shrine Banner featuring 3 Deities + Tulsi Maharani Vrindavan Shrine */}
-      <div className={`royal-shrine-banner glass-panel ${isGrandDiyaLit ? 'diya-illuminated' : ''}`}>
+      <div className={`royal-shrine-banner glass-panel ${isDiyaLit ? 'diya-illuminated' : ''}`}>
         <div className="shrine-deities-grid">
           <div className="deity-frame">
             <img src="/assets/jagannath.jpg" alt="Puri Jagannath Swamy" className="deity-img" />
@@ -150,16 +150,16 @@ export default function MoodSelector({ onMoodSelect }) {
           </div>
         </div>
 
-        {/* Grand Golden Brass Diya Display at Altar Center */}
-        {isGrandDiyaLit && (
-          <div className="grand-diya-display divine-reveal">
-            <div className="grand-diya-flames">
-              <span className="diya-wick">🔥</span>
-              <span className="diya-wick main-wick">🪔</span>
-              <span className="diya-wick">🔥</span>
+        {/* Golden Brass Diya Display with Upward Light facing the Lord */}
+        {isDiyaLit && (
+          <div className="diya-display-container divine-reveal">
+            <div className="diya-light-beam-facing-lord"></div>
+            <div className="diya-flames-row">
+              <span className="diya-side-wick">🔥</span>
+              <span className="diya-center-wick">🪔</span>
+              <span className="diya-side-wick">🔥</span>
             </div>
-            <div className="grand-diya-aura-glow"></div>
-            <span className="grand-diya-caption">✨ Sacred Deepam Glowing at the Altar ✨</span>
+            <span className="diya-caption">✨ Sacred Light Facing the Lord ✨</span>
           </div>
         )}
 
@@ -167,11 +167,11 @@ export default function MoodSelector({ onMoodSelect }) {
         <div className="shrine-action-area">
           <div className="pooja-btn-row">
             <button 
-              className={`pooja-btn grand-diya-btn ${isGrandDiyaLit ? 'lit' : ''}`} 
-              onClick={handleToggleGrandDiya} 
-              title="Light the Grand Golden Brass Diya at the Altar"
+              className={`pooja-btn diya-toggle-btn ${isDiyaLit ? 'lit' : ''}`} 
+              onClick={handleToggleDiya} 
+              title="Light Sacred Diya facing the Lord"
             >
-              {isGrandDiyaLit ? '🪔 Grand Diya Lit ✨' : '🪔 Light Grand Divine Diya'}
+              {isDiyaLit ? '🪔 Diya Lit ✨' : '🪔 Light Diya'}
             </button>
             <button className="pooja-btn tulsi-btn" onClick={handleOfferTulsi} title="Offer Sacred Tulsi Leaves to Sri Krishna">
               🌿 Offer Tulsi Leaves
