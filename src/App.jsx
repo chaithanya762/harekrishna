@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TempleBackground from './components/TempleBackground';
 import ParticleField from './components/ParticleField';
+import TempleBellRope from './components/TempleBellRope';
 import MoodSelector from './components/MoodSelector';
 import DivineMessage from './components/DivineMessage';
 import MantraSelector from './components/MantraSelector';
@@ -67,7 +68,10 @@ export default function App() {
       <TempleBackground glowIntensity={glowIntensity} />
       <ParticleField intensity={glowIntensity} color={selectedMood === 'lost' ? 'saffron' : 'gold'} />
 
-      {/* Sticky Top Navigation Bar (Hidden during active chanting for zero distraction) */}
+      {/* Hanging Brass Temple Bell Rope on Home Altar */}
+      {currentStep !== 'chanting' && <TempleBellRope />}
+
+      {/* Sticky Top Navigation Bar */}
       {currentStep !== 'chanting' && (
         <header className="top-navigation-bar">
           <div className="nav-container">

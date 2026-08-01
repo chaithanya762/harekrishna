@@ -1,0 +1,135 @@
+.festival-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 9, 6, 0.92);
+  backdrop-filter: blur(16px);
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.festival-modal-content {
+  max-width: 650px;
+  width: 100%;
+  padding: 2.2rem;
+  position: relative;
+  border-radius: 24px;
+  border: 1px solid rgba(212, 160, 23, 0.35);
+  background: linear-gradient(180deg, rgba(28, 21, 16, 0.98), rgba(15, 11, 8, 0.99));
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.festival-close-btn {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  background: rgba(26, 20, 16, 0.8);
+  border: 1px solid var(--gold);
+  color: var(--gold-light);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.festival-close-btn:hover {
+  background: var(--gold);
+  color: var(--dark-stone);
+}
+
+.festival-modal-header {
+  margin-bottom: 1.8rem;
+}
+
+.festival-badge {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  letter-spacing: 1.5px;
+  color: var(--gold-glow);
+  background: rgba(212, 160, 23, 0.15);
+  border: 1px solid rgba(212, 160, 23, 0.3);
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 0.6rem;
+}
+
+.festival-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.festival-subtitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: rgba(245, 230, 204, 0.8);
+  font-style: italic;
+}
+
+.festivals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.festival-card {
+  padding: 1.2rem 1.4rem;
+  border-radius: 16px;
+  border: 1px solid rgba(212, 160, 23, 0.25);
+  background: rgba(22, 16, 11, 0.8);
+}
+
+.fest-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.fest-date {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  color: var(--saffron);
+}
+
+.fest-type {
+  font-size: 0.75rem;
+  color: var(--gold-glow);
+  background: rgba(212, 160, 23, 0.12);
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+}
+
+.fest-title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--gold-light);
+  margin-bottom: 0.6rem;
+}
+
+.fest-rules, .fest-blessing {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(245, 230, 204, 0.88);
+  margin-bottom: 0.4rem;
+}
+
+@media (max-width: 600px) {
+  .festival-modal-content {
+    padding: 1.4rem 1rem;
+  }
+  .festival-title {
+    font-size: 1.4rem;
+  }
+}

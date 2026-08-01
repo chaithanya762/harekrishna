@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import FestivalCalendarModal from './FestivalCalendarModal';
+import { useSound } from '../hooks/useSound';
 import './MoodSelector.css';
 
 const moods = [
@@ -8,10 +10,26 @@ const moods = [
   { id: 'lost', emoji: '🔥', label: 'Seeking Direction', desc: 'The soul searches for light' }
 ];
 
+const SANKALPA_OPTIONS = [
+  '🕊️ World Peace & Universal Harmony',
+  '🧘 Inner Calm & Mindful Focus',
+  '🪷 Unconditional Devotion to Sri Krishna',
+  '💖 Healing & Blessing for Loved Ones',
+  '✨ Liberation & Freedom from Past Karma'
+];
+
 export default function MoodSelector({ onMoodSelect }) {
   const [clickedId, setClickedId] = useState(null);
   const [lotusFlowers, setLotusFlowers] = useState([]);
+  const [tulsiLeaves, setTulsiLeaves] = useState([]);
   const [offeringText, setOfferingText] = useState('');
+  const [isAartiActive, setIsAartiActive] = useState(false);
+  const [isIncenseLit, setIsIncenseLit] = useState(false);
+  const [showFestivalModal, setShowFestivalModal] = useState(false);
+  const [sankalpaVow, setSankalpaVow] = useState(SANKALPA_OPTIONS[2]);
+  const [customSankalpa, setCustomSankalpa] = useState('');
+
+  const { playBell, getAudioContext } = useSound();
 
   const handleClick = (id) => {
     setClickedId(id);
@@ -20,8 +38,10 @@ export default function MoodSelector({ onMoodSelect }) {
     }, 600);
   };
 
-  // Virtual Pushpanjali (Lotus Flower Offering) Handler
+  // 🌺 Virtual Pushpanjali (Lotus Flower Offering)
   const handleOfferFlowers = () => {
+    getAudioContext();
+    playBell(0.3);
     const newFlowers = Array.from({ length: 14 }).map((_, i) => ({
       id: Date.now() + i,
       left: Math.random() * 85 + 5,
@@ -29,12 +49,60 @@ export default function MoodSelector({ onMoodSelect }) {
     }));
 
     setLotusFlowers(newFlowers);
-    setOfferingText('🌺 Pushpanjali Offered to the Lord! 🌺');
+    setOfferingText('🌺 Pushpanjali Offered to the Lotus Feet of the Lord! 🌺');
 
     setTimeout(() => {
       setLotusFlowers([]);
       setOfferingText('');
     }, 2800);
+  };
+
+  // 🌿 Tulsi Maharani Leaves Offering
+  const handleOfferTulsi = () => {
+    getAudioContext();
+    playBell(0.4);
+    const newTulsi = Array.from({ length: 16 }).map((_, i) => ({
+      id: Date.now() + i,
+      left: Math.random() * 85 + 5,
+      delay: Math.random() * 0.3
+    }));
+
+    setTulsiLeaves(newTulsi);
+    setOfferingText('🌿 Sacred Tulsi Leaves Offered to Sri Krishna! 🌿');
+
+    setTimeout(() => {
+      setTulsiLeaves([]);
+      setOfferingText('');
+    }, 2800);
+  };
+
+  // 🪔 Interactive Diya Aarti Ceremony (360° Circular Diya Orbit)
+  const handlePerformAarti = () => {
+    getAudioContext();
+    playBell(0.5);
+    setIsAartiActive(true);
+    setOfferingText('🪔 Divine Aarti Performed to Sri Jagannath & Sri Krishna! 🪔');
+
+    if (navigator.vibrate) {
+      navigator.vibrate([40, 60, 40]);
+    }
+
+    setTimeout(() => {
+      setIsAartiActive(false);
+      setOfferingText('');
+    }, 4500);
+  };
+
+  // 💨 Light Incense Sticks (Agarbatti)
+  const handleLightIncense = () => {
+    getAudioContext();
+    playBell(0.25);
+    setIsIncenseLit(!isIncenseLit);
+    setOfferingText(isIncenseLit ? '💨 Incense Extinguished' : '💨 Aromatic Incense (Agarbatti) Lit on Altar! 💨');
+
+    setTimeout(() => {
+      setOfferingText('');
+    }, 2500);
   };
 
   return (
@@ -43,18 +111,31 @@ export default function MoodSelector({ onMoodSelect }) {
       {lotusFlowers.length > 0 && (
         <div className="lotus-shower-container">
           {lotusFlowers.map((f) => (
-            <span 
-              key={f.id} 
-              className="falling-lotus" 
-              style={{ left: `${f.left}%`, animationDelay: `${f.delay}s` }}
-            >
+            <span key={f.id} className="falling-lotus" style={{ left: `${f.left}%`, animationDelay: `${f.delay}s` }}>
               🌺
             </span>
           ))}
         </div>
       )}
 
-      {/* Royal Temple Altar Banner featuring 3 Sacred Deities */}
+      {/* Floating Tulsi Leaves Layer */}
+      {tulsiLeaves.length > 0 && (
+        <div className="tulsi-shower-container">
+          {tulsiLeaves.map((t) => (
+            <span key={t.id} className="falling-tulsi" style={{ left: `${t.left}%`, animationDelay: `${t.delay}s` }}>
+              🌿
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Upcoming Ekadashi & Festival Calendar Badge */}
+      <div className="festival-header-badge" onClick={() => setShowFestivalModal(true)} title="View Upcoming Ekadashi Fasting Dates & Festivals">
+        <span className="fhb-icon">🚩</span>
+        <span className="fhb-text">Upcoming: <strong>Kamada Ekadashi Fasting</strong> & <strong>Puri Ratha Yatra</strong> &rarr;</span>
+      </div>
+
+      {/* Royal Temple Altar Shrine Banner */}
       <div className="royal-shrine-banner glass-panel">
         <div className="shrine-deities-grid">
           <div className="deity-frame">
@@ -69,15 +150,78 @@ export default function MoodSelector({ onMoodSelect }) {
             <img src="/assets/krishna.jpg" alt="Royal Sri Krishna" className="deity-img" />
             <span className="deity-label">Sri Krishna Bhagavan</span>
           </div>
+
+          {/* Orbiting Aarti Golden Diya */}
+          {isAartiActive && (
+            <div className="orbiting-aarti-diya">
+              <span className="aarti-flame">🪔</span>
+              <div className="aarti-flame-glow"></div>
+            </div>
+          )}
         </div>
 
-        {/* Pushpanjali Flower Offering Button */}
+        {/* Lit Incense Sticks at Altar Base */}
+        {isIncenseLit && (
+          <div className="altar-incense-sticks divine-reveal">
+            <div className="incense-stick">
+              <span className="incense-ember">🔥</span>
+              <div className="incense-smoke-trail"></div>
+            </div>
+            <div className="incense-stick">
+              <span className="incense-ember">🔥</span>
+              <div className="incense-smoke-trail"></div>
+            </div>
+          </div>
+        )}
+
+        {/* Shrine Pooja & Aarti Action Buttons */}
         <div className="shrine-action-area">
-          <button className="pushpanjali-btn" onClick={handleOfferFlowers}>
-            🌺 Offer Sacred Lotus Flowers (Pushpanjali)
-          </button>
+          <div className="pooja-btn-row">
+            <button className="pooja-btn aarti-btn" onClick={handlePerformAarti} title="Perform 360° Aarti with Golden Diya">
+              🪔 Perform Divine Aarti
+            </button>
+            <button className="pooja-btn incense-btn" onClick={handleLightIncense} title="Light Aromatic Agarbatti Incense">
+              💨 {isIncenseLit ? 'Incense Lit 💨' : 'Light Incense (Agarbatti)'}
+            </button>
+            <button className="pooja-btn tulsi-btn" onClick={handleOfferTulsi} title="Offer Sacred Tulsi Leaves to Sri Krishna">
+              🌿 Offer Tulsi Leaves
+            </button>
+            <button className="pooja-btn lotus-btn" onClick={handleOfferFlowers} title="Offer Pink Lotus Flowers">
+              🌺 Offer Lotus Flowers
+            </button>
+          </div>
+
           {offeringText && <p className="offering-msg divine-reveal">{offeringText}</p>}
         </div>
+      </div>
+
+      {/* Daily Spiritual Sankalpa / Intention Setting Box */}
+      <div className="sankalpa-card glass-panel">
+        <div className="sankalpa-badge">📜 DAILY SACRED SANKALPA (SPIRITUAL INTENTION)</div>
+        <p className="sankalpa-prompt">Dedicate today's chanting to a divine vow:</p>
+
+        <div className="sankalpa-options">
+          {SANKALPA_OPTIONS.map((opt, i) => (
+            <button 
+              key={i} 
+              className={`sankalpa-opt-btn ${sankalpaVow === opt ? 'active' : ''}`}
+              onClick={() => { setSankalpaVow(opt); setCustomSankalpa(''); }}
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+
+        <div className="custom-sankalpa-box">
+          <input 
+            type="text" 
+            placeholder="Or type your personal spiritual vow..."
+            value={customSankalpa}
+            onChange={(e) => { setCustomSankalpa(e.target.value); setSankalpaVow(e.target.value); }}
+            className="custom-sankalpa-input"
+          />
+        </div>
+        <p className="sankalpa-current"><strong>Active Sankalpa:</strong> "{customSankalpa || sankalpaVow}"</p>
       </div>
 
       {/* Daily Bhagavad Gita Wisdom Card */}
@@ -109,6 +253,11 @@ export default function MoodSelector({ onMoodSelect }) {
           </div>
         ))}
       </div>
+
+      {/* Ekadashi & Festival Modal */}
+      {showFestivalModal && (
+        <FestivalCalendarModal onClose={() => setShowFestivalModal(false)} />
+      )}
     </div>
   );
 }

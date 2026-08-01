@@ -3,7 +3,7 @@
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 2rem 1.5rem 4rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,8 +12,40 @@
   z-index: 10;
 }
 
-/* Lotus Flower Shower Layer */
-.lotus-shower-container {
+/* Ekadashi Header Badge */
+.festival-header-badge {
+  background: rgba(26, 20, 16, 0.85);
+  border: 1px solid var(--gold);
+  border-radius: 25px;
+  padding: 0.45rem 1.2rem;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.festival-header-badge:hover {
+  background: rgba(212, 160, 23, 0.2);
+  border-color: var(--gold-glow);
+  transform: translateY(-2px);
+}
+
+.fhb-icon {
+  font-size: 1.1rem;
+}
+
+.fhb-text {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--gold-light);
+}
+
+/* Lotus & Tulsi Shower Layers */
+.lotus-shower-container,
+.tulsi-shower-container {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -30,17 +62,22 @@
 }
 
 @keyframes lotusFall {
-  0% {
-    transform: translateY(0) rotate(0deg) scale(0.6);
-    opacity: 1;
-  }
-  70% {
-    opacity: 0.9;
-  }
-  100% {
-    transform: translateY(105vh) rotate(360deg) scale(1.2);
-    opacity: 0;
-  }
+  0% { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 1; }
+  70% { opacity: 0.9; }
+  100% { transform: translateY(105vh) rotate(360deg) scale(1.2); opacity: 0; }
+}
+
+.falling-tulsi {
+  position: absolute;
+  top: -40px;
+  font-size: 2.2rem;
+  animation: tulsiFall 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  filter: drop-shadow(0 0 8px rgba(34, 139, 34, 0.8));
+}
+
+@keyframes tulsiFall {
+  0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 1; }
+  100% { transform: translateY(105vh) rotate(-360deg) scale(1.1); opacity: 0; }
 }
 
 /* Royal Altar Shrine Banner */
@@ -55,6 +92,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .shrine-deities-grid {
@@ -64,6 +102,8 @@
   gap: 2rem;
   flex-wrap: wrap;
   margin-bottom: 1.2rem;
+  position: relative;
+  width: 100%;
 }
 
 .deity-frame {
@@ -71,6 +111,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  z-index: 2;
 }
 
 .deity-img {
@@ -100,39 +141,193 @@
   border: 1px solid rgba(212, 160, 23, 0.25);
 }
 
+/* Orbiting 360° Aarti Golden Diya */
+.orbiting-aarti-diya {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10;
+  animation: aartiOrbit 4.5s linear infinite;
+}
+
+.aarti-flame {
+  font-size: 2.5rem;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 0 15px rgba(255, 140, 0, 1));
+}
+
+@keyframes aartiOrbit {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Incense Sticks at Base */
+.altar-incense-sticks {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 1rem;
+}
+
+.incense-stick {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.incense-ember {
+  font-size: 0.9rem;
+  animation: emberGlow 1.5s infinite alternate;
+}
+
+@keyframes emberGlow {
+  from { opacity: 0.6; filter: drop-shadow(0 0 2px red); }
+  to { opacity: 1; filter: drop-shadow(0 0 8px orange); }
+}
+
+.incense-smoke-trail {
+  width: 4px;
+  height: 45px;
+  background: linear-gradient(to top, rgba(245, 230, 204, 0.4), transparent);
+  filter: blur(2px);
+  animation: smokeRise 3s infinite ease-in-out;
+}
+
+/* Pooja Action Buttons Row */
 .shrine-action-area {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  width: 100%;
 }
 
-.pushpanjali-btn {
-  background: linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(212, 160, 23, 0.25));
-  border: 1px solid var(--gold);
+.pooja-btn-row {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.pooja-btn {
+  background: rgba(26, 20, 16, 0.8);
+  border: 1px solid rgba(212, 160, 23, 0.35);
   color: var(--gold-light);
-  padding: 0.6rem 1.4rem;
-  border-radius: 30px;
+  padding: 0.55rem 1rem;
+  border-radius: 20px;
   font-family: var(--font-heading);
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-.pushpanjali-btn:hover {
+.pooja-btn:hover {
   background: linear-gradient(135deg, var(--saffron), var(--gold));
   color: var(--dark-stone);
   font-weight: 700;
-  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+  box-shadow: 0 6px 18px rgba(255, 215, 0, 0.5);
   transform: translateY(-2px);
 }
 
+.aarti-btn { border-color: rgba(255, 140, 0, 0.6); }
+.incense-btn { border-color: rgba(212, 160, 23, 0.6); }
+.tulsi-btn { border-color: rgba(34, 139, 34, 0.6); }
+.lotus-btn { border-color: rgba(255, 105, 180, 0.6); }
+
 .offering-msg {
   font-family: var(--font-heading);
-  font-size: 0.85rem;
-  color: #FFB6C1;
+  font-size: 0.88rem;
+  color: var(--gold-glow);
   letter-spacing: 1px;
+}
+
+/* Spiritual Sankalpa Intention Box */
+.sankalpa-card {
+  width: 100%;
+  padding: 1.4rem 1.8rem;
+  margin-bottom: 1.8rem;
+  border-radius: 18px;
+  border: 1px solid rgba(212, 160, 23, 0.3);
+  background: rgba(22, 16, 11, 0.88);
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.sankalpa-badge {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  letter-spacing: 1.5px;
+  color: var(--gold-glow);
+  margin-bottom: 0.4rem;
+}
+
+.sankalpa-prompt {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: rgba(245, 230, 204, 0.85);
+  margin-bottom: 0.8rem;
+}
+
+.sankalpa-options {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+
+.sankalpa-opt-btn {
+  background: rgba(26, 20, 16, 0.7);
+  border: 1px solid rgba(212, 160, 23, 0.25);
+  color: rgba(245, 230, 204, 0.85);
+  padding: 0.4rem 0.85rem;
+  border-radius: 15px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sankalpa-opt-btn:hover {
+  border-color: var(--gold-glow);
+  color: var(--gold-light);
+}
+
+.sankalpa-opt-btn.active {
+  background: linear-gradient(135deg, var(--saffron-deep), var(--temple-red));
+  border-color: var(--gold-glow);
+  color: var(--warm-white);
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(212, 160, 23, 0.4);
+}
+
+.custom-sankalpa-input {
+  width: 100%;
+  max-width: 450px;
+  padding: 0.5rem 1rem;
+  background: rgba(18, 13, 9, 0.85);
+  border: 1px solid rgba(212, 160, 23, 0.3);
+  border-radius: 20px;
+  color: var(--gold-light);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  text-align: center;
+  outline: none;
+  margin-bottom: 0.6rem;
+}
+
+.sankalpa-current {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  color: var(--gold-light);
 }
 
 /* Daily Gita Wisdom Card */
@@ -267,5 +462,9 @@
   }
   .mood-emoji {
     font-size: 2.2rem;
+  }
+  .pooja-btn {
+    font-size: 0.76rem;
+    padding: 0.45rem 0.75rem;
   }
 }
