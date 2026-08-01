@@ -1,12 +1,12 @@
 import { useRef, useCallback, useEffect } from 'react';
 
-// Pure Web Audio Synthesizer for Om Meditation Drone (136.1Hz) & Temple Bells
+// Web Audio Synthesizer for Om Meditation Drone & Authentic Brass Temple Bell Chime
 export function useSound() {
   const audioCtxRef = useRef(null);
   const ambientOscRef = useRef(null);
   const ambientGainRef = useRef(null);
 
-  // Lazy AudioContext Initialization
+  // Lazy AudioContext Initialization & Auto-Resume
   const getAudioContext = useCallback(() => {
     if (!audioCtxRef.current) {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -20,33 +20,40 @@ export function useSound() {
     return audioCtxRef.current;
   }, []);
 
-  // 🔔 Sacred Temple Bell Chime
-  const playBell = useCallback((vol = 0.3) => {
+  // 🔔 Authentic Brass Temple Bell Chime (Rich 3-harmonic resonance)
+  const playBell = useCallback((vol = 0.5) => {
     const ctx = getAudioContext();
     if (!ctx) return;
 
     const now = ctx.currentTime;
-    const osc1 = ctx.createOscillator();
-    const osc2 = ctx.createOscillator();
+    const osc1 = ctx.createOscillator(); // Fundamental tone (G5: 784Hz)
+    const osc2 = ctx.createOscillator(); // Fifth harmonic (D6: 1175Hz)
+    const osc3 = ctx.createOscillator(); // Octave harmonic (G6: 1568Hz)
     const gain = ctx.createGain();
 
     osc1.type = 'sine';
     osc2.type = 'sine';
+    osc3.type = 'sine';
 
-    osc1.frequency.setValueAtTime(800, now);
-    osc2.frequency.setValueAtTime(1200, now);
+    osc1.frequency.setValueAtTime(784, now);
+    osc2.frequency.setValueAtTime(1174.66, now);
+    osc3.frequency.setValueAtTime(1567.98, now);
 
+    // Warm bell strike envelope
     gain.gain.setValueAtTime(vol, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.8);
 
     osc1.connect(gain);
     osc2.connect(gain);
+    osc3.connect(gain);
     gain.connect(ctx.destination);
 
     osc1.start(now);
     osc2.start(now);
-    osc1.stop(now + 1.2);
-    osc2.stop(now + 1.2);
+    osc3.start(now);
+    osc1.stop(now + 1.8);
+    osc2.stop(now + 1.8);
+    osc3.stop(now + 1.8);
   }, [getAudioContext]);
 
   // 🔘 Tap / Bead Click Sound
@@ -85,7 +92,6 @@ export function useSound() {
     osc1.type = 'sine';
     osc2.type = 'sine';
 
-    // Cosmic Om frequencies (136.1Hz fundamental + 272.2Hz octave resonance)
     osc1.frequency.setValueAtTime(136.1, now);
     osc2.frequency.setValueAtTime(272.2, now);
 

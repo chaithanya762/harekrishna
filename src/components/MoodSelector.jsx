@@ -24,7 +24,6 @@ export default function MoodSelector({ onMoodSelect }) {
   const [tulsiLeaves, setTulsiLeaves] = useState([]);
   const [offeringText, setOfferingText] = useState('');
   const [isAartiActive, setIsAartiActive] = useState(false);
-  const [isIncenseLit, setIsIncenseLit] = useState(false);
   const [showFestivalModal, setShowFestivalModal] = useState(false);
   const [sankalpaVow, setSankalpaVow] = useState(SANKALPA_OPTIONS[2]);
   const [customSankalpa, setCustomSankalpa] = useState('');
@@ -76,12 +75,12 @@ export default function MoodSelector({ onMoodSelect }) {
     }, 2800);
   };
 
-  // 🪔 Interactive Diya Aarti Ceremony (360° Circular Diya Orbit)
+  // 🪔 Interactive Diya Aarti Ceremony (Moving Aarti across ALL THREE DEITIES)
   const handlePerformAarti = () => {
     getAudioContext();
-    playBell(0.5);
+    playBell(0.6);
     setIsAartiActive(true);
-    setOfferingText('🪔 Divine Aarti Performed to Sri Jagannath & Sri Krishna! 🪔');
+    setOfferingText('🪔 Divine Aarti Performed to Sri Jagannath, Sri Chaitanya & Sri Krishna! 🪔');
 
     if (navigator.vibrate) {
       navigator.vibrate([40, 60, 40]);
@@ -90,19 +89,7 @@ export default function MoodSelector({ onMoodSelect }) {
     setTimeout(() => {
       setIsAartiActive(false);
       setOfferingText('');
-    }, 4500);
-  };
-
-  // 💨 Light Incense Sticks (Agarbatti)
-  const handleLightIncense = () => {
-    getAudioContext();
-    playBell(0.25);
-    setIsIncenseLit(!isIncenseLit);
-    setOfferingText(isIncenseLit ? '💨 Incense Extinguished' : '💨 Aromatic Incense (Agarbatti) Lit on Altar! 💨');
-
-    setTimeout(() => {
-      setOfferingText('');
-    }, 2500);
+    }, 5500);
   };
 
   return (
@@ -151,37 +138,20 @@ export default function MoodSelector({ onMoodSelect }) {
             <span className="deity-label">Sri Krishna Bhagavan</span>
           </div>
 
-          {/* Orbiting Aarti Golden Diya */}
+          {/* Golden Aarti Diya moving across ALL THREE DEITIES */}
           {isAartiActive && (
-            <div className="orbiting-aarti-diya">
+            <div className="all-deities-aarti-diya">
               <span className="aarti-flame">🪔</span>
               <div className="aarti-flame-glow"></div>
             </div>
           )}
         </div>
 
-        {/* Lit Incense Sticks at Altar Base */}
-        {isIncenseLit && (
-          <div className="altar-incense-sticks divine-reveal">
-            <div className="incense-stick">
-              <span className="incense-ember">🔥</span>
-              <div className="incense-smoke-trail"></div>
-            </div>
-            <div className="incense-stick">
-              <span className="incense-ember">🔥</span>
-              <div className="incense-smoke-trail"></div>
-            </div>
-          </div>
-        )}
-
-        {/* Shrine Pooja & Aarti Action Buttons */}
+        {/* Shrine Pooja & Aarti Action Buttons (Incense Removed) */}
         <div className="shrine-action-area">
           <div className="pooja-btn-row">
-            <button className="pooja-btn aarti-btn" onClick={handlePerformAarti} title="Perform 360° Aarti with Golden Diya">
+            <button className="pooja-btn aarti-btn" onClick={handlePerformAarti} title="Perform Aarti across all deities">
               🪔 Perform Divine Aarti
-            </button>
-            <button className="pooja-btn incense-btn" onClick={handleLightIncense} title="Light Aromatic Agarbatti Incense">
-              💨 {isIncenseLit ? 'Incense Lit 💨' : 'Light Incense (Agarbatti)'}
             </button>
             <button className="pooja-btn tulsi-btn" onClick={handleOfferTulsi} title="Offer Sacred Tulsi Leaves to Sri Krishna">
               🌿 Offer Tulsi Leaves

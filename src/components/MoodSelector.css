@@ -99,9 +99,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 2.2rem;
   flex-wrap: wrap;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.4rem;
   position: relative;
   width: 100%;
 }
@@ -141,62 +141,49 @@
   border: 1px solid rgba(212, 160, 23, 0.25);
 }
 
-/* Orbiting 360° Aarti Golden Diya */
-.orbiting-aarti-diya {
+/* Golden Aarti Diya Wave moving across ALL THREE DEITIES */
+.all-deities-aarti-diya {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+  inset: 0;
   pointer-events: none;
   z-index: 10;
-  animation: aartiOrbit 4.5s linear infinite;
 }
 
 .aarti-flame {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   position: absolute;
   top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  filter: drop-shadow(0 0 15px rgba(255, 140, 0, 1));
+  left: 10%;
+  filter: drop-shadow(0 0 20px rgba(255, 140, 0, 1));
+  animation: aartiAcrossAll 5.5s infinite ease-in-out;
 }
 
-@keyframes aartiOrbit {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Incense Sticks at Base */
-.altar-incense-sticks {
-  display: flex;
-  gap: 3rem;
-  margin-bottom: 1rem;
-}
-
-.incense-stick {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.incense-ember {
-  font-size: 0.9rem;
-  animation: emberGlow 1.5s infinite alternate;
-}
-
-@keyframes emberGlow {
-  from { opacity: 0.6; filter: drop-shadow(0 0 2px red); }
-  to { opacity: 1; filter: drop-shadow(0 0 8px orange); }
-}
-
-.incense-smoke-trail {
-  width: 4px;
-  height: 45px;
-  background: linear-gradient(to top, rgba(245, 230, 204, 0.4), transparent);
-  filter: blur(2px);
-  animation: smokeRise 3s infinite ease-in-out;
+@keyframes aartiAcrossAll {
+  0% {
+    left: 10%;
+    top: 10px;
+    transform: scale(1);
+  }
+  25% {
+    left: 35%;
+    top: 75px;
+    transform: scale(1.2);
+  }
+  50% {
+    left: 50%;
+    top: 10px;
+    transform: scale(1);
+  }
+  75% {
+    left: 80%;
+    top: 75px;
+    transform: scale(1.25);
+  }
+  100% {
+    left: 10%;
+    top: 10px;
+    transform: scale(1);
+  }
 }
 
 /* Pooja Action Buttons Row */
@@ -210,7 +197,7 @@
 
 .pooja-btn-row {
   display: flex;
-  gap: 0.7rem;
+  gap: 0.8rem;
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
@@ -220,13 +207,14 @@
   background: rgba(26, 20, 16, 0.8);
   border: 1px solid rgba(212, 160, 23, 0.35);
   color: var(--gold-light);
-  padding: 0.55rem 1rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 20px;
   font-family: var(--font-heading);
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  touch-action: manipulation;
 }
 
 .pooja-btn:hover {
@@ -238,7 +226,6 @@
 }
 
 .aarti-btn { border-color: rgba(255, 140, 0, 0.6); }
-.incense-btn { border-color: rgba(212, 160, 23, 0.6); }
 .tulsi-btn { border-color: rgba(34, 139, 34, 0.6); }
 .lotus-btn { border-color: rgba(255, 105, 180, 0.6); }
 
@@ -464,7 +451,7 @@
     font-size: 2.2rem;
   }
   .pooja-btn {
-    font-size: 0.76rem;
-    padding: 0.45rem 0.75rem;
+    font-size: 0.78rem;
+    padding: 0.45rem 0.8rem;
   }
 }

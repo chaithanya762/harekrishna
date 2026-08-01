@@ -7,15 +7,21 @@ export default function TempleBellRope() {
   const { playBell, getAudioContext } = useSound();
 
   const handleRing = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    getAudioContext();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
-    playBell(0.6); // Play crisp temple chime
+    const ctx = getAudioContext();
+    if (ctx && ctx.state === 'suspended') {
+      ctx.resume();
+    }
+
+    playBell(0.6); // Ring resonant brass temple bell chime
     setIsRinging(true);
 
     if (navigator.vibrate) {
-      navigator.vibrate([30, 50, 30]);
+      navigator.vibrate([40, 60, 40]);
     }
 
     setTimeout(() => {
@@ -24,7 +30,12 @@ export default function TempleBellRope() {
   };
 
   return (
-    <div className="temple-bell-rope-container" onClick={handleRing} title="Pull Brass Temple Bell Rope for Chime 🔔">
+    <div 
+      className="temple-bell-rope-container" 
+      onPointerDown={handleRing} 
+      onClick={handleRing}
+      title="Pull Brass Temple Bell Rope for Chime 🔔"
+    >
       <div className={`bell-rope-wrapper ${isRinging ? 'ringing' : ''}`}>
         {/* Brass Ring Hook */}
         <div className="bell-ceiling-ring"></div>
