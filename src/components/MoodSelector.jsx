@@ -87,7 +87,7 @@ export default function MoodSelector({ onMoodSelect }) {
     setIsDiyaLit(nextState);
 
     if (nextState) {
-      setOfferingText('🪔 Sacred Diya Lit facing the Lotus Feet of the Lord! 🪔');
+      setOfferingText('🪔 Auspicious Deepam Shining Upon the Lotus Feet! 🪔');
     } else {
       setOfferingText('🪔 Sacred Diya Extinguished');
     }
@@ -165,7 +165,7 @@ export default function MoodSelector({ onMoodSelect }) {
               <span className="diya-center-wick">🪔</span>
               <span className="diya-side-wick">🔥</span>
             </div>
-            <span className="diya-caption">✨ Sacred Light Facing the Lord ✨</span>
+            <span className="diya-caption">✨ Auspicious Deepam Shining Upon the Lotus Feet ✨</span>
           </div>
         )}
 
