@@ -149,7 +149,7 @@ export default function MoodSelector({ onMoodSelect }) {
 
           {/* 🪴 Established Sacred Tulsi Maharani Vrinda Devi Shrine */}
           <div className="deity-frame tulsi-shrine-frame" title="Srimati Tulsi Maharani Vrinda Devi">
-            <img src="/assets/tulsi_maharani.svg" alt="Srimati Tulsi Maharani Vrinda Devi" className="deity-img tulsi-deity-img" />
+            <img src="/assets/tulsi_maharani.jpg" alt="Srimati Tulsi Maharani Vrinda Devi" className="deity-img tulsi-deity-img" />
             <span className="deity-label tulsi-label">🌿 Tulsi Maharani</span>
           </div>
         </div>
