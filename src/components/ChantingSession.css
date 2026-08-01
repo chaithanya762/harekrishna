@@ -1,0 +1,518 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;600&family=Noto+Serif+Devanagari:wght@400;700&display=swap');
+
+:root {
+  --color-gold: #FFD700;
+  --color-gold-dim: rgba(255, 215, 0, 0.4);
+  --color-gold-bright: #FFF8DC;
+  --color-cream: #FFFDD0;
+  --color-saffron: #FF9933;
+  --color-temple-red: #800000;
+  --color-dark-stone: #1a1a1a;
+  --color-light-stone: #2a2a2a;
+}
+
+.chanting-session {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, var(--color-dark-stone), var(--color-light-stone));
+  color: var(--color-cream);
+  font-family: 'Cormorant Garamond', serif;
+  overflow: hidden;
+}
+
+/* Background Effects */
+.bg-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255, 215, 0, calc(var(--glow-intensity, 0) * 0.15)) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.rath-yatra-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.03;
+  background-image: radial-gradient(var(--color-gold) 1px, transparent 1px);
+  background-size: 20px 20px;
+  animation: rathYatra 60s linear infinite;
+  z-index: 0;
+}
+
+@keyframes rathYatra {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100px); }
+}
+
+/* Header */
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  z-index: 10;
+}
+
+.icon-btn {
+  background: transparent;
+  border: 1px solid var(--color-gold-dim);
+  color: var(--color-gold);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 215, 0, 0.1);
+  box-shadow: 0 0 10px var(--color-gold-dim);
+}
+
+.round-info {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  color: var(--color-gold);
+  letter-spacing: 2px;
+}
+
+/* Main Area */
+.session-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 1rem;
+  z-index: 10;
+}
+
+/* Mantra Display */
+.mantra-display {
+  text-align: center;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.mantra-line {
+  font-family: 'Noto Serif Devanagari', 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: rgba(255, 253, 208, 0.4);
+  transition: all 0.4s ease;
+}
+
+.mantra-line.active {
+  color: var(--color-gold);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  animation: breathe 3s infinite ease-in-out;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.8; text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+  50% { opacity: 1; text-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+}
+
+.paused-text {
+  font-size: 1.4rem;
+  color: var(--color-gold-dim);
+  font-style: italic;
+  animation: breathe 4s infinite;
+}
+
+/* Bead Counter */
+.bead-counter-container {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bead-circle {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg); /* Start at top */
+}
+
+.bead {
+  fill: transparent;
+  stroke: rgba(255, 215, 0, 0.2);
+  stroke-width: 1.5px;
+  transition: all 0.3s ease;
+}
+
+.bead.filled {
+  fill: var(--color-gold);
+  stroke: var(--color-gold);
+  filter: drop-shadow(0 0 2px var(--color-gold));
+}
+
+.bead.milestone {
+  stroke: rgba(255, 215, 0, 0.4);
+}
+
+.bead.milestone.filled {
+  fill: var(--color-gold-bright);
+  filter: drop-shadow(0 0 4px var(--color-gold));
+}
+
+.bead.latest {
+  animation: beadFill 0.4s ease-out forwards;
+}
+
+@keyframes beadFill {
+  0% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.5); filter: drop-shadow(0 0 8px var(--color-gold)); }
+  100% { transform: scale(1); }
+}
+
+/* Central Deity Frame inside Japa Mala Ring */
+.central-deity-frame {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-gold);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+}
+
+.central-deity-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.5s ease;
+  animation: breathe 6s infinite ease-in-out;
+}
+
+.deity-aura-ring {
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 1px solid var(--color-gold);
+  box-shadow: 0 0 30px var(--color-gold);
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.count-display {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  background: rgba(26, 20, 16, 0.75);
+  backdrop-filter: blur(8px);
+  padding: 4px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(212, 160, 23, 0.3);
+}
+
+.current-count {
+  font-family: 'Cinzel', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  line-height: 1;
+}
+
+.total-count {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  color: var(--color-gold-dim);
+  letter-spacing: 2px;
+}
+
+.completion-deity-avatar {
+  margin: 0 auto 1.5rem auto;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--color-gold);
+  box-shadow: 0 0 35px var(--color-gold);
+}
+
+.completion-deity-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chant-btn-sub {
+  position: absolute;
+  bottom: 12px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  font-family: var(--font-heading);
+  color: var(--color-gold-bright);
+}
+
+
+/* Chant Button */
+.chant-button {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid var(--color-gold);
+  background: radial-gradient(circle at center, var(--color-saffron), var(--color-temple-red));
+  color: var(--color-gold);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(255, 153, 51, 0.4);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.chant-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,215,0,0.8) 0%, transparent 60%);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.chant-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255, 153, 51, 0.6);
+}
+
+.chant-button:active {
+  transform: scale(0.95);
+}
+
+.chant-button:active::before {
+  transform: translate(-50%, -50%) scale(2);
+  opacity: 0.5;
+  transition: 0s;
+}
+
+.chant-button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  filter: grayscale(0.5);
+}
+
+.om-symbol {
+  font-size: 40px;
+  line-height: 1;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  z-index: 2;
+}
+
+/* Pause Overlay */
+.pause-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn 0.3s ease;
+}
+
+.pause-overlay h2 {
+  font-family: 'Cinzel', serif;
+  color: var(--color-gold);
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Completion Screen */
+.completion-screen {
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, rgba(255,215,0,0.2), var(--color-dark-stone));
+}
+
+.completion-burst {
+  text-align: center;
+  animation: completionBurst 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  padding: 2rem;
+  z-index: 10;
+}
+
+@keyframes completionBurst {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.emoji {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.shimmer-text {
+  font-family: 'Cinzel', serif;
+  font-size: 3rem;
+  background: linear-gradient(to right, var(--color-gold), #fff, var(--color-gold));
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+.completion-text {
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+}
+
+.stats-box {
+  background: rgba(255, 215, 0, 0.05);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stats-number {
+  font-family: 'Cinzel', serif;
+  font-size: 3rem;
+  color: var(--color-gold);
+  margin-top: 0.5rem;
+}
+
+.blessing-text {
+  font-style: italic;
+  color: var(--color-gold-dim);
+  margin-bottom: 2.5rem;
+}
+
+.completion-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.primary-btn, .secondary-btn {
+  padding: 0.8rem 2rem;
+  border-radius: 30px;
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.primary-btn {
+  background: var(--color-gold);
+  color: var(--color-dark-stone);
+  border: none;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.primary-btn:hover {
+  background: var(--color-gold-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+}
+
+.secondary-btn {
+  background: transparent;
+  color: var(--color-gold);
+  border: 1px solid var(--color-gold);
+}
+
+.secondary-btn:hover {
+  background: rgba(255, 215, 0, 0.1);
+}
+
+/* Flash Effect */
+.flash-active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 215, 0, 0.3);
+  z-index: 50;
+  pointer-events: none;
+  animation: flash 0.5s ease-out forwards;
+}
+
+@keyframes flash {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .bead-counter-container {
+    max-width: 280px;
+  }
+  .mantra-line {
+    font-size: 1rem;
+  }
+  .mantra-line.active {
+    font-size: 1.3rem;
+  }
+  .shimmer-text {
+    font-size: 2.2rem;
+  }
+}

@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <!-- Fierce Twilight & Fire Glow Gradients -->
+    <radialGradient id="twilightGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FF3300" stop-opacity="1"/>
+      <stop offset="35%" stop-color="#FF9900" stop-opacity="0.9"/>
+      <stop offset="70%" stop-color="#4A0000" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#120A06" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="goldBeam" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDD0"/>
+      <stop offset="50%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#CC5500"/>
+    </linearGradient>
+    <filter id="fireGlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background: Cosmic Twilight & Flaming Sanctum -->
+  <rect width="600" height="600" fill="url(#twilightGlow)"/>
+
+  <!-- Broken Golden Pillar in Background (Hiranyakashipu's Pillar) -->
+  <g opacity="0.4" stroke="#FFD700" stroke-width="3">
+    <rect x="80" y="80" width="70" height="440" fill="#2A1F15"/>
+    <path d="M 80 220 L 150 200 L 115 300 Z" fill="#FF6B00"/> <!-- Cracks of light -->
+    <rect x="450" y="80" width="70" height="440" fill="#2A1F15"/>
+    <!-- Temple Threshold Arch Header -->
+    <path d="M 50 140 Q 300 40 550 140" fill="none" stroke="#FFD700" stroke-width="8" filter="url(#fireGlow)"/>
+  </g>
+
+  <!-- Flashing Rays of Divine Anger & Grace -->
+  <g opacity="0.25" stroke="#FFD700" stroke-width="2">
+    <line x1="300" y1="280" x2="300" y2="0"/>
+    <line x1="300" y1="280" x2="600" y2="100"/>
+    <line x1="300" y1="280" x2="600" y2="450"/>
+    <line x1="300" y1="280" x2="0" y2="450"/>
+    <line x1="300" y1="280" x2="0" y2="100"/>
+  </g>
+
+  <!-- FIERCE LORD SRI UGRA NARASIMHA SWAMY -->
+  <!-- Flaming Mane -->
+  <g fill="#FF6B00" stroke="#FFD700" stroke-width="2" filter="url(#fireGlow)">
+    <!-- Outer Mane Spikes -->
+    <polygon points="300,60 270,120 330,120"/>
+    <polygon points="230,80 180,140 240,140"/>
+    <polygon points="370,80 420,140 360,140"/>
+    <polygon points="170,120 110,180 180,180"/>
+    <polygon points="430,120 490,180 420,180"/>
+    <polygon points="130,190 70,240 140,240"/>
+    <polygon points="470,190 530,240 460,240"/>
+  </g>
+
+  <!-- Royal Golden Kiritam Crown -->
+  <polygon points="300,70 260,160 340,160" fill="url(#goldBeam)" stroke="#FFF8DC" stroke-width="3" filter="url(#fireGlow)"/>
+  <circle cx="300" cy="120" r="14" fill="#C41E3A"/>
+
+  <!-- Fierce Lion Head Contour -->
+  <path d="M 210 180 Q 300 140 390 180 Q 430 260 390 320 Q 300 380 210 320 Q 170 260 210 180 Z" fill="#2A170F" stroke="#FFD700" stroke-width="5"/>
+
+  <!-- Glowing Fiery Red Eyes (Wrathful & Protection) -->
+  <ellipse cx="250" cy="235" rx="26" ry="16" fill="#FFFDD0" stroke="#FF0000" stroke-width="4"/>
+  <circle cx="250" cy="235" r="10" fill="#FF0000" filter="url(#fireGlow)"/>
+  <circle cx="252" cy="233" r="4" fill="#FFFFFF"/>
+
+  <ellipse cx="350" cy="235" rx="26" ry="16" fill="#FFFDD0" stroke="#FF0000" stroke-width="4"/>
+  <circle cx="350" cy="235" r="10" fill="#FF0000" filter="url(#fireGlow)"/>
+  <circle cx="352" cy="233" r="4" fill="#FFFFFF"/>
+
+  <!-- Third Eye (Trinetra) -->
+  <circle cx="300" cy="190" r="8" fill="#FF3300" stroke="#FFD700" stroke-width="2"/>
+
+  <!-- Ugra Roar Snout & Sharp White Fangs Slaying Tyranny -->
+  <path d="M 255 265 Q 300 250 345 265 Q 360 325 300 340 Q 240 325 255 265 Z" fill="#D4A017" stroke="#FFD700" stroke-width="3"/>
+  <path d="M 250 295 Q 300 340 350 295 Q 300 350 250 295 Z" fill="#660000"/>
+  <!-- Sharp Upper Fangs -->
+  <polygon points="265,295 277,295 271,325" fill="#FFFFFF"/>
+  <polygon points="323,295 335,295 329,325" fill="#FFFFFF"/>
+  <!-- Sharp Lower Fangs -->
+  <polygon points="275,335 285,335 280,315" fill="#FFFFFF"/>
+  <polygon points="315,335 325,335 320,315" fill="#FFFFFF"/>
+
+  <!-- Massive Golden Chest & Shoulders -->
+  <path d="M 180 340 Q 300 420 420 340 L 450 480 Q 300 520 150 480 Z" fill="url(#goldBeam)" stroke="#FFD700" stroke-width="4"/>
+
+  <!-- HIRANYAKASHIPU SLAYED ACROSS NARASIMHA'S KNEES -->
+  <g>
+    <!-- Demon Torso across lap -->
+    <path d="M 170 410 Q 300 370 430 420" stroke="#8B0000" stroke-width="35" stroke-linecap="round"/>
+    <path d="M 170 410 Q 300 370 430 420" stroke="#4A2E16" stroke-width="28" stroke-linecap="round"/>
+    <!-- Demon Head falling back -->
+    <circle cx="445" cy="435" r="22" fill="#3D2614" stroke="#FF3300" stroke-width="2"/>
+    <!-- Demon Crown falling -->
+    <polygon points="455,420 475,410 465,435" fill="#FFD700"/>
+    <!-- Demon Sword dropped on floor -->
+    <path d="M 380 470 L 490 520" stroke="#C0C0C0" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="380" cy="470" r="8" fill="#FFD700"/>
+    <!-- Divine Nails Tearing Demon (Symbolic Slaying) -->
+    <path d="M 280 360 L 290 415 M 300 360 L 305 420 M 320 360 L 322 415" stroke="#FF0000" stroke-width="5" stroke-linecap="round" filter="url(#fireGlow)"/>
+  </g>
+
+  <!-- CHILD DEVOTEE PRAHLADA PRAYING ON THE LEFT -->
+  <g transform="translate(40, 320)">
+    <!-- Divine Halo behind Prahlada -->
+    <circle cx="50" cy="60" r="45" fill="rgba(255, 215, 0, 0.25)" filter="url(#fireGlow)"/>
+    <!-- Prahlada Body -->
+    <path d="M 30 180 L 50 90 L 70 180 Z" fill="#F5E6CC" stroke="#FFD700" stroke-width="2"/>
+    <path d="M 25 120 L 75 120 L 65 180 L 35 180 Z" fill="#FF9900"/>
+    <!-- Prahlada Head -->
+    <circle cx="50" cy="70" r="20" fill="#F5E6CC" stroke="#FFD700" stroke-width="2"/>
+    <circle cx="50" cy="65" r="18" fill="#3D2413"/> <!-- Hair knot -->
+    <!-- Prahlada Folded Hands in Prayer (Namaskar 🙏) -->
+    <path d="M 45 95 L 50 78 L 55 95 Z" fill="#FFFDD0" stroke="#FFD700" stroke-width="2"/>
+    <!-- Lotus Garland around Prahlada -->
+    <circle cx="50" cy="105" r="14" fill="none" stroke="#FF69B4" stroke-width="4" stroke-dasharray="4,4"/>
+    <!-- Prahlada Text Tag -->
+    <text x="50" y="200" text-anchor="middle" fill="#FFD700" font-family="Cinzel, serif" font-size="14" font-weight="bold">BHAKTA PRAHLADA 🙏</text>
+  </g>
+
+  <!-- Banner Label at Bottom -->
+  <rect x="120" y="540" width="360" height="42" rx="21" fill="rgba(26,20,16,0.9)" stroke="#FFD700" stroke-width="3" filter="url(#fireGlow)"/>
+  <text x="300" y="568" text-anchor="middle" fill="#FFD700" font-family="Cinzel, serif" font-size="18" font-weight="bold" letter-spacing="2">SRI UGRA NARASIMHA SWAMY</text>
+</svg>

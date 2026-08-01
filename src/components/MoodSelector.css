@@ -1,0 +1,170 @@
+.mood-selector-container {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+.royal-shrine-banner {
+  width: 100%;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(212, 160, 23, 0.4);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(26, 20, 16, 0.9), rgba(42, 31, 21, 0.85));
+}
+
+.shrine-deities-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.deity-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.deity-img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.deity-img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+}
+
+.deity-label {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--gold-light);
+  letter-spacing: 1px;
+}
+
+.shrine-blessing {
+  margin-top: 1rem;
+}
+
+.royal-symbol {
+  font-size: 1.2rem;
+  letter-spacing: 8px;
+}
+
+.mood-title {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+}
+
+.mood-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  color: rgba(245, 230, 204, 0.8);
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.mood-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.mood-card {
+  padding: 1.8rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border: 1px solid rgba(212, 160, 23, 0.2);
+}
+
+.mood-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: var(--gold-glow);
+  box-shadow: 0 10px 30px rgba(212, 160, 23, 0.3);
+}
+
+.mood-card.clicked {
+  border-color: var(--saffron);
+  box-shadow: 0 0 30px var(--saffron);
+}
+
+.mood-emoji {
+  font-size: 2.8rem;
+  margin-bottom: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.mood-card:hover .mood-emoji {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.mood-label {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--gold-light);
+  margin-bottom: 0.4rem;
+}
+
+.mood-desc {
+  font-size: 0.95rem;
+  color: rgba(245, 230, 204, 0.7);
+  line-height: 1.4;
+}
+
+.ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 215, 0, 0.5);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: ripple 0.6s ease-out forwards;
+}
+
+@media (max-width: 600px) {
+  .royal-shrine-banner {
+    padding: 1rem;
+  }
+  .deity-img {
+    width: 80px;
+    height: 80px;
+  }
+  .mood-title {
+    font-size: 1.8rem;
+  }
+  .mood-cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
