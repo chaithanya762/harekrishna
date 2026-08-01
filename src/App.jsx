@@ -58,24 +58,45 @@ export default function App() {
     setGlowIntensity(0.25);
   };
 
+  const isAltarActive = currentStep === 'mood' || currentStep === 'message' || currentStep === 'mantra';
+  const isLeelasActive = currentStep === 'leelas';
+  const isStatsActive = currentStep === 'stats';
+
   return (
     <div className="app-container">
       <TempleBackground glowIntensity={glowIntensity} />
       <ParticleField intensity={glowIntensity} color={selectedMood === 'lost' ? 'saffron' : 'gold'} />
 
-      {/* Top Bar Navigation (Hidden during active chanting for zero distraction) */}
+      {/* Sticky Top Navigation Bar (Hidden during active chanting for zero distraction) */}
       {currentStep !== 'chanting' && (
-        <div className="top-navigation">
-          <button className="nav-btn" onClick={handleBackToHome} title="Home Altar">
-            🕉️ <span className="nav-text">Altar</span>
-          </button>
-          <button className="nav-btn" onClick={() => setCurrentStep('leelas')} title="Sri Krishna Leelas & Avatars">
-            🪷 <span className="nav-text">Leelas & Avatars</span>
-          </button>
-          <button className="nav-btn" onClick={() => setCurrentStep('stats')} title="Sacred Stats">
-            📿 <span className="nav-text">Stats</span>
-          </button>
-        </div>
+        <header className="top-navigation-bar">
+          <div className="nav-container">
+            <button 
+              className={`nav-btn ${isAltarActive ? 'active' : ''}`} 
+              onClick={handleBackToHome} 
+              title="Home Altar"
+            >
+              <span className="nav-icon">🕉️</span>
+              <span className="nav-text">Altar</span>
+            </button>
+            <button 
+              className={`nav-btn ${isLeelasActive ? 'active' : ''}`} 
+              onClick={() => setCurrentStep('leelas')} 
+              title="Sri Krishna Leelas & Avatars"
+            >
+              <span className="nav-icon">🪷</span>
+              <span className="nav-text">Leelas & Avatars</span>
+            </button>
+            <button 
+              className={`nav-btn ${isStatsActive ? 'active' : ''}`} 
+              onClick={() => setCurrentStep('stats')} 
+              title="Sacred Stats"
+            >
+              <span className="nav-icon">📿</span>
+              <span className="nav-text">Stats</span>
+            </button>
+          </div>
+        </header>
       )}
 
       {/* Main Screen Stream */}
