@@ -75,16 +75,16 @@ export default function MoodSelector({ onMoodSelect }) {
     }, 2800);
   };
 
-  // 🪔 Proper Temple Clockwise Aarti Ceremony (7 Clockwise Circles around Lotus Feet & Form)
+  // 🪔 Steady Clockwise Altar Aarti Ceremony
   const handlePerformTempleAarti = (target = 'all') => {
     getAudioContext();
     playBell(0.6);
     setAartiTarget(target);
 
     if (target === 'tulsi') {
-      setOfferingText('🪔 7 Clockwise Temple Aarti Performed to Vrinda Devi Srimati Tulsi Maharani! 🌿');
+      setOfferingText('🪔 Clockwise Temple Aarti Performed to Vrinda Devi Srimati Tulsi Maharani! 🌿');
     } else {
-      setOfferingText('🪔 7 Clockwise Temple Aarti Performed to Sri Jagannath, Sri Chaitanya, Sri Krishna & Tulsi Maharani! 🪔');
+      setOfferingText('🪔 Clockwise Temple Aarti Performed to Sri Jagannath, Sri Chaitanya, Sri Krishna & Tulsi Maharani! 🪔');
     }
 
     if (navigator.vibrate) {
@@ -94,7 +94,7 @@ export default function MoodSelector({ onMoodSelect }) {
     setTimeout(() => {
       setAartiTarget(null);
       setOfferingText('');
-    }, 7500);
+    }, 8000);
   };
 
   return (
@@ -145,16 +145,13 @@ export default function MoodSelector({ onMoodSelect }) {
 
           {/* 🪴 Established Sacred Tulsi Maharani Vrinda Devi Shrine */}
           <div className="deity-frame tulsi-shrine-frame" onClick={() => handlePerformTempleAarti('tulsi')} title="Tap to Perform Aarti to Srimati Tulsi Maharani">
-            <div className="tulsi-pot-wrapper">
-              <span className="tulsi-plant-icon">🪴</span>
-              <span className="tulsi-glow-aura"></span>
-            </div>
-            <span className="deity-label tulsi-label">🌿 Srimati Tulsi Maharani</span>
+            <img src="/assets/tulsi_maharani.svg" alt="Srimati Tulsi Maharani Vrinda Devi" className="deity-img tulsi-deity-img" />
+            <span className="deity-label tulsi-label">🌿 Tulsi Maharani</span>
           </div>
 
-          {/* Proper Temple Clockwise Aarti Diya Animation */}
+          {/* Steady Clockwise Altar Aarti Movement */}
           {aartiTarget === 'all' && (
-            <div className="temple-clockwise-aarti-diya">
+            <div className="full-altar-clockwise-aarti">
               <span className="aarti-flame">🪔</span>
               <div className="aarti-flame-glow"></div>
             </div>
@@ -171,8 +168,8 @@ export default function MoodSelector({ onMoodSelect }) {
         {/* Shrine Pooja & Temple Aarti Action Buttons */}
         <div className="shrine-action-area">
           <div className="pooja-btn-row">
-            <button className="pooja-btn aarti-btn" onClick={() => handlePerformTempleAarti('all')} title="Perform 7 Clockwise Temple Aarti to All Deities">
-              🪔 Perform 7-Circle Temple Aarti
+            <button className="pooja-btn aarti-btn" onClick={() => handlePerformTempleAarti('all')} title="Perform Steady Clockwise Aarti across Altar">
+              🪔 Perform Clockwise Aarti
             </button>
             <button className="pooja-btn tulsi-aarti-btn" onClick={() => handlePerformTempleAarti('tulsi')} title="Perform Aarti to Sacred Tulsi Devi">
               🪴 Tulsi Maharani Aarti
