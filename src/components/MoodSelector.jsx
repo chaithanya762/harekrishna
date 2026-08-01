@@ -23,7 +23,7 @@ export default function MoodSelector({ onMoodSelect }) {
   const [lotusFlowers, setLotusFlowers] = useState([]);
   const [tulsiLeaves, setTulsiLeaves] = useState([]);
   const [offeringText, setOfferingText] = useState('');
-  const [isAartiActive, setIsAartiActive] = useState(false);
+  const [aartiTarget, setAartiTarget] = useState(null); // 'all' | 'tulsi'
   const [showFestivalModal, setShowFestivalModal] = useState(false);
   const [sankalpaVow, setSankalpaVow] = useState(SANKALPA_OPTIONS[2]);
   const [customSankalpa, setCustomSankalpa] = useState('');
@@ -67,7 +67,7 @@ export default function MoodSelector({ onMoodSelect }) {
     }));
 
     setTulsiLeaves(newTulsi);
-    setOfferingText('🌿 Sacred Tulsi Leaves Offered to Sri Krishna! 🌿');
+    setOfferingText('🌿 Sacred Tulsi Leaves & Manjari Offered to Sri Krishna & Tulsi Maharani! 🌿');
 
     setTimeout(() => {
       setTulsiLeaves([]);
@@ -75,21 +75,26 @@ export default function MoodSelector({ onMoodSelect }) {
     }, 2800);
   };
 
-  // 🪔 Interactive Diya Aarti Ceremony (Moving Aarti across ALL THREE DEITIES)
-  const handlePerformAarti = () => {
+  // 🪔 Proper Temple Clockwise Aarti Ceremony (7 Clockwise Circles around Lotus Feet & Form)
+  const handlePerformTempleAarti = (target = 'all') => {
     getAudioContext();
     playBell(0.6);
-    setIsAartiActive(true);
-    setOfferingText('🪔 Divine Aarti Performed to Sri Jagannath, Sri Chaitanya & Sri Krishna! 🪔');
+    setAartiTarget(target);
+
+    if (target === 'tulsi') {
+      setOfferingText('🪔 7 Clockwise Temple Aarti Performed to Vrinda Devi Srimati Tulsi Maharani! 🌿');
+    } else {
+      setOfferingText('🪔 7 Clockwise Temple Aarti Performed to Sri Jagannath, Sri Chaitanya, Sri Krishna & Tulsi Maharani! 🪔');
+    }
 
     if (navigator.vibrate) {
       navigator.vibrate([40, 60, 40]);
     }
 
     setTimeout(() => {
-      setIsAartiActive(false);
+      setAartiTarget(null);
       setOfferingText('');
-    }, 5500);
+    }, 7500);
   };
 
   return (
@@ -122,7 +127,7 @@ export default function MoodSelector({ onMoodSelect }) {
         <span className="fhb-text">Upcoming: <strong>Kamada Ekadashi Fasting</strong> & <strong>Puri Ratha Yatra</strong> &rarr;</span>
       </div>
 
-      {/* Royal Temple Altar Shrine Banner */}
+      {/* Royal Temple Altar Shrine Banner featuring 3 Deities + Tulsi Maharani Vrindavan Shrine */}
       <div className="royal-shrine-banner glass-panel">
         <div className="shrine-deities-grid">
           <div className="deity-frame">
@@ -138,20 +143,39 @@ export default function MoodSelector({ onMoodSelect }) {
             <span className="deity-label">Sri Krishna Bhagavan</span>
           </div>
 
-          {/* Golden Aarti Diya moving across ALL THREE DEITIES */}
-          {isAartiActive && (
-            <div className="all-deities-aarti-diya">
+          {/* 🪴 Established Sacred Tulsi Maharani Vrinda Devi Shrine */}
+          <div className="deity-frame tulsi-shrine-frame" onClick={() => handlePerformTempleAarti('tulsi')} title="Tap to Perform Aarti to Srimati Tulsi Maharani">
+            <div className="tulsi-pot-wrapper">
+              <span className="tulsi-plant-icon">🪴</span>
+              <span className="tulsi-glow-aura"></span>
+            </div>
+            <span className="deity-label tulsi-label">🌿 Srimati Tulsi Maharani</span>
+          </div>
+
+          {/* Proper Temple Clockwise Aarti Diya Animation */}
+          {aartiTarget === 'all' && (
+            <div className="temple-clockwise-aarti-diya">
+              <span className="aarti-flame">🪔</span>
+              <div className="aarti-flame-glow"></div>
+            </div>
+          )}
+
+          {aartiTarget === 'tulsi' && (
+            <div className="tulsi-clockwise-aarti-diya">
               <span className="aarti-flame">🪔</span>
               <div className="aarti-flame-glow"></div>
             </div>
           )}
         </div>
 
-        {/* Shrine Pooja & Aarti Action Buttons (Incense Removed) */}
+        {/* Shrine Pooja & Temple Aarti Action Buttons */}
         <div className="shrine-action-area">
           <div className="pooja-btn-row">
-            <button className="pooja-btn aarti-btn" onClick={handlePerformAarti} title="Perform Aarti across all deities">
-              🪔 Perform Divine Aarti
+            <button className="pooja-btn aarti-btn" onClick={() => handlePerformTempleAarti('all')} title="Perform 7 Clockwise Temple Aarti to All Deities">
+              🪔 Perform 7-Circle Temple Aarti
+            </button>
+            <button className="pooja-btn tulsi-aarti-btn" onClick={() => handlePerformTempleAarti('tulsi')} title="Perform Aarti to Sacred Tulsi Devi">
+              🪴 Tulsi Maharani Aarti
             </button>
             <button className="pooja-btn tulsi-btn" onClick={handleOfferTulsi} title="Offer Sacred Tulsi Leaves to Sri Krishna">
               🌿 Offer Tulsi Leaves
@@ -206,7 +230,7 @@ export default function MoodSelector({ onMoodSelect }) {
       </div>
 
       <h1 className="mood-title shimmer-text">How does your soul feel today?</h1>
-      <p className="mood-subtitle">Offer your heart to Sri Chaitanya, Jagannath Swamy & Sri Krishna</p>
+      <p className="mood-subtitle">Offer your heart to Sri Chaitanya, Jagannath Swamy, Sri Krishna & Tulsi Maharani</p>
       
       <div className="mood-cards-grid">
         {moods.map((mood, index) => (

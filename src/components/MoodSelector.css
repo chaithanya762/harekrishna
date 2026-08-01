@@ -99,7 +99,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2.2rem;
+  gap: 1.8rem;
   flex-wrap: wrap;
   margin-bottom: 1.4rem;
   position: relative;
@@ -112,11 +112,12 @@
   align-items: center;
   gap: 0.5rem;
   z-index: 2;
+  cursor: pointer;
 }
 
 .deity-img {
-  width: 95px;
-  height: 95px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   object-fit: contain;
   border: 2.5px solid var(--gold);
@@ -132,7 +133,7 @@
 
 .deity-label {
   font-family: var(--font-heading);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--gold-light);
   letter-spacing: 1px;
   background: rgba(212, 160, 23, 0.12);
@@ -141,49 +142,99 @@
   border: 1px solid rgba(212, 160, 23, 0.25);
 }
 
-/* Golden Aarti Diya Wave moving across ALL THREE DEITIES */
-.all-deities-aarti-diya {
+/* 🪴 Tulsi Maharani Vrindavan Shrine Pot */
+.tulsi-shrine-frame {
+  position: relative;
+}
+
+.tulsi-pot-wrapper {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2.5px solid #228B22;
+  background: radial-gradient(circle, rgba(20, 50, 20, 0.9) 0%, rgba(10, 25, 10, 0.98) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px rgba(34, 139, 34, 0.6);
+  position: relative;
+  transition: transform 0.4s ease;
+}
+
+.tulsi-shrine-frame:hover .tulsi-pot-wrapper {
+  transform: scale(1.08);
+  box-shadow: 0 0 35px rgba(50, 205, 50, 0.8);
+}
+
+.tulsi-plant-icon {
+  font-size: 3rem;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 127, 0.8));
+}
+
+.tulsi-label {
+  color: #90EE90 !important;
+  border-color: rgba(34, 139, 34, 0.5) !important;
+  background: rgba(34, 139, 34, 0.15) !important;
+}
+
+/* Authentic Temple Clockwise Aarti Diya (7 Clockwise Circles across Deities & Lotus Feet) */
+.temple-clockwise-aarti-diya {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 10;
 }
 
-.aarti-flame {
-  font-size: 2.8rem;
+.temple-clockwise-aarti-diya .aarti-flame {
+  font-size: 2.6rem;
   position: absolute;
-  top: 10px;
-  left: 10%;
   filter: drop-shadow(0 0 20px rgba(255, 140, 0, 1));
-  animation: aartiAcrossAll 5.5s infinite ease-in-out;
+  animation: temple7ClockwiseAarti 7.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-@keyframes aartiAcrossAll {
-  0% {
-    left: 10%;
-    top: 10px;
-    transform: scale(1);
-  }
-  25% {
-    left: 35%;
-    top: 75px;
-    transform: scale(1.2);
-  }
-  50% {
-    left: 50%;
-    top: 10px;
-    transform: scale(1);
-  }
-  75% {
-    left: 80%;
-    top: 75px;
-    transform: scale(1.25);
-  }
-  100% {
-    left: 10%;
-    top: 10px;
-    transform: scale(1);
-  }
+@keyframes temple7ClockwiseAarti {
+  /* Circle 1: Lotus Feet of Jagannath Swamy */
+  0% { left: 8%; top: 60px; transform: scale(0.9) rotate(0deg); }
+  10% { left: 16%; top: 15px; transform: scale(1.1) rotate(180deg); }
+  20% { left: 8%; top: 60px; transform: scale(1) rotate(360deg); }
+
+  /* Circle 2: Chaitanya Mahaprabhu */
+  30% { left: 32%; top: 60px; transform: scale(0.9) rotate(0deg); }
+  40% { left: 40%; top: 15px; transform: scale(1.1) rotate(180deg); }
+  50% { left: 32%; top: 60px; transform: scale(1) rotate(360deg); }
+
+  /* Circle 3: Sri Krishna Bhagavan */
+  60% { left: 58%; top: 60px; transform: scale(0.9) rotate(0deg); }
+  70% { left: 66%; top: 15px; transform: scale(1.1) rotate(180deg); }
+  80% { left: 58%; top: 60px; transform: scale(1) rotate(360deg); }
+
+  /* Circle 4: Tulsi Maharani Vrinda Devi */
+  88% { left: 82%; top: 60px; transform: scale(0.9) rotate(0deg); }
+  94% { left: 88%; top: 15px; transform: scale(1.2) rotate(180deg); }
+  100% { left: 82%; top: 60px; transform: scale(1) rotate(360deg); }
+}
+
+/* Clockwise Aarti around Tulsi Pot */
+.tulsi-clockwise-aarti-diya {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.tulsi-clockwise-aarti-diya .aarti-flame {
+  font-size: 2.6rem;
+  position: absolute;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 127, 1));
+  animation: tulsi7ClockwiseAarti 7.5s ease-in-out forwards;
+}
+
+@keyframes tulsi7ClockwiseAarti {
+  0% { left: 78%; top: 60px; transform: rotate(0deg); }
+  25% { left: 86%; top: 10px; transform: rotate(90deg); }
+  50% { left: 92%; top: 60px; transform: rotate(180deg); }
+  75% { left: 86%; top: 85px; transform: rotate(270deg); }
+  100% { left: 78%; top: 60px; transform: rotate(360deg); }
 }
 
 /* Pooja Action Buttons Row */
@@ -197,7 +248,7 @@
 
 .pooja-btn-row {
   display: flex;
-  gap: 0.8rem;
+  gap: 0.7rem;
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
@@ -207,10 +258,10 @@
   background: rgba(26, 20, 16, 0.8);
   border: 1px solid rgba(212, 160, 23, 0.35);
   color: var(--gold-light);
-  padding: 0.6rem 1.2rem;
+  padding: 0.55rem 1.1rem;
   border-radius: 20px;
   font-family: var(--font-heading);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
@@ -226,6 +277,7 @@
 }
 
 .aarti-btn { border-color: rgba(255, 140, 0, 0.6); }
+.tulsi-aarti-btn { border-color: rgba(0, 255, 127, 0.6); }
 .tulsi-btn { border-color: rgba(34, 139, 34, 0.6); }
 .lotus-btn { border-color: rgba(255, 105, 180, 0.6); }
 
@@ -431,27 +483,34 @@
 
 @media (max-width: 600px) {
   .shrine-deities-grid {
-    gap: 1rem;
+    gap: 0.8rem;
   }
-  .deity-img {
-    width: 75px;
-    height: 75px;
+  .deity-img, .tulsi-pot-wrapper {
+    width: 68px;
+    height: 68px;
+  }
+  .tulsi-plant-icon {
+    font-size: 2.2rem;
+  }
+  .deity-label {
+    font-size: 0.68rem;
+    padding: 0.15rem 0.45rem;
   }
   .mood-title {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
   }
   .mood-cards-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 0.8rem;
   }
   .mood-card {
-    padding: 1.4rem 1rem;
+    padding: 1.2rem 0.8rem;
   }
   .mood-emoji {
-    font-size: 2.2rem;
+    font-size: 2.1rem;
   }
   .pooja-btn {
-    font-size: 0.78rem;
-    padding: 0.45rem 0.8rem;
+    font-size: 0.74rem;
+    padding: 0.4rem 0.7rem;
   }
 }
