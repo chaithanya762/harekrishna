@@ -60,10 +60,7 @@
 - **📿 Set Japa Deity**: Instantly set any Avatar or Leela as your active 108 Japa center deity!
 
 ### 📊 5. Per-Device Local Storage Persistence
-- Daily reset logic, streak tracking, lifetime mantra count, and total sessions preserved locally per device.
-
-### 📜 6. Non-Intrusive Footer
-- `made with ❤️ by chaithanya` footer sits at the bottom end of scrollable pages and automatically hides during active Japa chanting sessions to eliminate distraction.
+- Daily reset logic, streak tracking, lifetime mantra count, and total sessions preserved locally per device
 
 ---
 
@@ -107,9 +104,6 @@ npm run build
 npm run preview
 ```
 
-### Deploying to Vercel
-1. Import `chaithanya762/harekrishna` repository into [Vercel](https://vercel.com).
-2. Click **Deploy** (Vite settings detected automatically).
 
 ---
 
