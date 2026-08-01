@@ -3,7 +3,7 @@
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 5rem 1.5rem 3rem 1.5rem;
+  padding: 3rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,24 +12,58 @@
   z-index: 10;
 }
 
+/* Lotus Flower Shower Layer */
+.lotus-shower-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 150;
+  overflow: hidden;
+}
+
+.falling-lotus {
+  position: absolute;
+  top: -40px;
+  font-size: 2.4rem;
+  animation: lotusFall 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8));
+}
+
+@keyframes lotusFall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.6);
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(105vh) rotate(360deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Royal Altar Shrine Banner */
 .royal-shrine-banner {
   width: 100%;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  border: 1px solid rgba(212, 160, 23, 0.4);
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7);
+  padding: 1.8rem;
+  margin-bottom: 1.8rem;
+  border-radius: 24px;
+  border: 1px solid rgba(212, 160, 23, 0.35);
+  background: linear-gradient(180deg, rgba(32, 24, 18, 0.9), rgba(18, 13, 9, 0.95));
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(180deg, rgba(26, 20, 16, 0.9), rgba(42, 31, 21, 0.85));
 }
 
 .shrine-deities-grid {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 2rem;
-  width: 100%;
   flex-wrap: wrap;
+  margin-bottom: 1.2rem;
 }
 
 .deity-frame {
@@ -40,53 +74,120 @@
 }
 
 .deity-img {
-  width: 110px;
-  height: 110px;
+  width: 95px;
+  height: 95px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--gold);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  object-fit: contain;
+  border: 2.5px solid var(--gold);
+  box-shadow: 0 0 20px rgba(212, 160, 23, 0.4);
+  background: radial-gradient(circle, rgba(42, 31, 21, 0.9) 0%, rgba(15, 10, 7, 0.98) 100%);
+  transition: transform 0.4s ease;
 }
 
-.deity-img:hover {
+.deity-frame:hover .deity-img {
   transform: scale(1.08);
   box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
 }
 
 .deity-label {
   font-family: var(--font-heading);
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: var(--gold-light);
   letter-spacing: 1px;
+  background: rgba(212, 160, 23, 0.12);
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  border: 1px solid rgba(212, 160, 23, 0.25);
 }
 
-.shrine-blessing {
-  margin-top: 1rem;
+.shrine-action-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.royal-symbol {
-  font-size: 1.2rem;
-  letter-spacing: 8px;
+.pushpanjali-btn {
+  background: linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(212, 160, 23, 0.25));
+  border: 1px solid var(--gold);
+  color: var(--gold-light);
+  padding: 0.6rem 1.4rem;
+  border-radius: 30px;
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
+.pushpanjali-btn:hover {
+  background: linear-gradient(135deg, var(--saffron), var(--gold));
+  color: var(--dark-stone);
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.offering-msg {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: #FFB6C1;
+  letter-spacing: 1px;
+}
+
+/* Daily Gita Wisdom Card */
+.gita-wisdom-card {
+  width: 100%;
+  padding: 1.4rem 1.8rem;
+  margin-bottom: 2rem;
+  border-radius: 18px;
+  border: 1px solid rgba(212, 160, 23, 0.3);
+  background: rgba(22, 16, 11, 0.85);
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.gita-badge {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  letter-spacing: 1.5px;
+  color: var(--gold-glow);
+  margin-bottom: 0.6rem;
+}
+
+.gita-verse {
+  font-family: var(--font-mantra);
+  font-size: 1.05rem;
+  color: var(--gold-light);
+  margin-bottom: 0.4rem;
+  font-style: italic;
+}
+
+.gita-translation {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: rgba(245, 230, 204, 0.88);
+}
+
+/* Titles */
 .mood-title {
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: 2.3rem;
   text-align: center;
-  margin-bottom: 0.5rem;
-  letter-spacing: 1px;
+  margin-bottom: 0.4rem;
 }
 
 .mood-subtitle {
   font-family: var(--font-body);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   color: rgba(245, 230, 204, 0.8);
   font-style: italic;
+  margin-bottom: 2.2rem;
   text-align: center;
-  margin-bottom: 2.5rem;
 }
 
+/* Grid & Mood Cards */
 .mood-cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -95,42 +196,47 @@
 }
 
 .mood-card {
-  padding: 1.8rem 1.2rem;
+  padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  border-radius: 20px;
+  border: 1px solid rgba(212, 160, 23, 0.25);
+  background: rgba(26, 20, 16, 0.85);
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  border: 1px solid rgba(212, 160, 23, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
 }
 
 .mood-card:hover {
-  transform: translateY(-5px) scale(1.02);
+  transform: translateY(-6px) scale(1.02);
   border-color: var(--gold-glow);
-  box-shadow: 0 10px 30px rgba(212, 160, 23, 0.3);
+  box-shadow: 0 15px 35px rgba(212, 160, 23, 0.35);
+  background: rgba(35, 27, 21, 0.95);
 }
 
 .mood-card.clicked {
-  border-color: var(--saffron);
-  box-shadow: 0 0 30px var(--saffron);
+  transform: scale(0.96);
+  border-color: var(--gold-glow);
+  box-shadow: 0 0 25px rgba(212, 160, 23, 0.8);
 }
 
 .mood-emoji {
-  font-size: 2.8rem;
-  margin-bottom: 0.8rem;
+  font-size: 3rem;
+  margin-bottom: 1rem;
   transition: transform 0.3s ease;
 }
 
 .mood-card:hover .mood-emoji {
-  transform: scale(1.15) rotate(5deg);
+  transform: scale(1.15);
 }
 
 .mood-label {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   color: var(--gold-light);
   margin-bottom: 0.4rem;
 }
@@ -141,30 +247,25 @@
   line-height: 1.4;
 }
 
-.ripple {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  background: rgba(255, 215, 0, 0.5);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  animation: ripple 0.6s ease-out forwards;
-}
-
 @media (max-width: 600px) {
-  .royal-shrine-banner {
-    padding: 1rem;
+  .shrine-deities-grid {
+    gap: 1rem;
   }
   .deity-img {
-    width: 80px;
-    height: 80px;
+    width: 75px;
+    height: 75px;
   }
   .mood-title {
     font-size: 1.8rem;
   }
   .mood-cards-grid {
     grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .mood-card {
+    padding: 1.4rem 1rem;
+  }
+  .mood-emoji {
+    font-size: 2.2rem;
   }
 }
