@@ -83,8 +83,8 @@ export const ISKCON_CALENDAR_2026 = [
   {
     isoDate: '2026-08-23',
     dateStr: 'August 23, 2026',
-    title: '🪷 Jhulan Yatra & Pavitra Ekadashi',
-    type: 'Vrindavan Swing Festival',
+    title: '🚩 Pavitra Ekadashi (Jhulan Yatra)',
+    type: 'Ekadashi Fasting',
     rules: 'Offer silk thread Pavitra garlands to Radha-Krishna on Their flower swing.',
     blessing: 'Attracts the sweet, confidential conjugal pastimes of Vrindavan.'
   },
@@ -115,8 +115,8 @@ export const ISKCON_CALENDAR_2026 = [
   {
     isoDate: '2026-10-21',
     dateStr: 'October 21, 2026',
-    title: '🌕 Sharad Purnima & Pasankusa Ekadashi',
-    type: 'Rasa Leela & Kartik Begins',
+    title: '🌕 Pasankusa Ekadashi (Sharad Purnima)',
+    type: 'Ekadashi Fasting',
     rules: 'Offer sweet rice (Kheer) under full moonlight. Damodara Month begins.',
     blessing: 'Grants entrance into Sri Krishna\'s intimate Raas Leela pastimes.'
   },
@@ -132,31 +132,34 @@ export const ISKCON_CALENDAR_2026 = [
     isoDate: '2026-11-20',
     dateStr: 'November 20, 2026',
     title: '🪴 Utthana Prabodhini Ekadashi (Tulsi Vivaha)',
-    type: 'Awakening of Lord Vishnu',
+    type: 'Ekadashi Fasting',
     rules: 'Perform Tulsi Vivaha ceremony with Sri Shaligram Shila & offer brass lamps.',
     blessing: 'Bestows eternal auspiciousness, happy family life, and pure Krishna bhakti.'
   },
   {
     isoDate: '2026-12-20',
     dateStr: 'December 20, 2026',
-    title: '📜 Gita Jayanti & Mokshada Ekadashi',
-    type: 'Spoken Day of Bhagavad Gita',
+    title: '📜 Mokshada Ekadashi (Gita Jayanti)',
+    type: 'Ekadashi Fasting',
     rules: 'Recite all 18 Chapters of Bhagavad Gita As It Is & fast from grains.',
     blessing: 'Destroys illusion, grants divine wisdom, and leads straight to Goloka Vrindavan.'
   }
 ];
 
-// Helper to get the next upcoming Ekadashi and Festival dynamically based on today's date
+// Helper to get the next upcoming Ekadashi and distinct Festival dynamically
 export function getNextUpcomingEvents(referenceDate = new Date()) {
   const todayIso = referenceDate.toISOString().split('T')[0];
 
   const upcomingEvents = ISKCON_CALENDAR_2026.filter(event => event.isoDate >= todayIso);
-  
-  // If we reach end of year 2026, fallback to first events
   const listToUse = upcomingEvents.length > 0 ? upcomingEvents : ISKCON_CALENDAR_2026;
 
-  const nextEkadashi = listToUse.find(e => e.type.includes('Ekadashi')) || listToUse[0];
-  const nextFestival = listToUse.find(e => !e.type.includes('Ekadashi')) || listToUse[1] || listToUse[0];
+  // Find next Ekadashi
+  const nextEkadashi = listToUse.find(e => e.title.includes('Ekadashi') || e.type.includes('Ekadashi')) || listToUse[0];
+  
+  // Find next DISTINCT Major Festival that is NOT the same event date
+  const nextFestival = listToUse.find(e => e.isoDate !== nextEkadashi.isoDate && (!e.type.includes('Ekadashi') && !e.title.includes('Ekadashi'))) 
+    || listToUse.find(e => e.isoDate !== nextEkadashi.isoDate) 
+    || listToUse[0];
 
   return {
     nextEkadashi,
