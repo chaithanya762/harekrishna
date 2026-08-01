@@ -63,13 +63,19 @@ const MantraSelector = ({ onSelect, onBack }) => {
           <div 
             key={mantra.id} 
             className="mantra-card glass-panel" 
-            style={{ animationDelay: `${index * 0.15}s` }}
+            style={{ animationDelay: `${index * 0.1}s` }}
             onClick={() => onSelect(mantra.id)}
           >
             {/* Unobscured God Portrait Section */}
             <div className="mantra-deity-header">
               <div className="mantra-deity-avatar-ring">
-                <img src={mantra.image} alt={mantra.subtitle} className="mantra-deity-portrait" />
+                <img 
+                  src={mantra.image} 
+                  alt={mantra.subtitle} 
+                  className="mantra-deity-portrait"
+                  loading="eager"
+                  decoding="async"
+                />
               </div>
               <div className="mantra-deity-tag">{mantra.icon} {mantra.subtitle}</div>
             </div>

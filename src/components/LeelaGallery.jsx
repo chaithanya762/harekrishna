@@ -55,14 +55,14 @@ export const LEELAS = [
     strategy: 'Divine love is infinite and non-rivalrous. The Lord has an intimate, individual relationship with every soul that turns to Him with total sincerity.'
   },
   {
-    id: 'kalinga_nardana',
-    title: 'Kalinga Nardana Leela',
+    id: 'kalinga_mardana',
+    title: 'Kalinga Mardana Leela',
     subtitle: 'Triumph over Darkness',
     tag: '🐍 Divine Victory',
     image: '/assets/leela_kalinga.jpg',
-    shloka: 'Kalinga Nardana Krishna | Yamuna Thira Vihara',
+    shloka: 'Kalinga Mardana Krishna | Yamuna Thira Vihara',
     mantraLines: [
-      'Kalinga Nardana Gopala',
+      'Kalinga Mardana Gopala',
       'Yamuna Thira Vihara Laza',
       'Devaki Nanda Vasudeva',
       'Namo Namaste Keshava'
@@ -333,10 +333,16 @@ export default function LeelaGallery({ onSelectLeela, onBack }) {
           <div 
             key={item.id} 
             className="leela-card glass-panel"
-            style={{ animationDelay: `${index * 0.08}s` }}
+            style={{ animationDelay: `${index * 0.05}s` }}
           >
             <div className="leela-img-wrapper">
-              <img src={item.image} alt={item.title} className="leela-card-img" />
+              <img 
+                src={item.image} 
+                alt={item.title} 
+                className="leela-card-img"
+                loading="eager"
+                decoding="async"
+              />
               <span className="leela-card-tag">{item.tag}</span>
             </div>
 
